@@ -29,6 +29,7 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
     private ViewPager viewPager;
     private FixedPagerAdapter fixedPagerAdapter;
     private String[] titles = new String[]{"news", "paper", "events"};
+    private String[] invisbleTitles = new String[]{};
     private List<BaseFragment> fragments;
     @Nullable
     @Override
@@ -76,9 +77,19 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
                 Log.d("yyds",getActivity().toString());
                 Intent intent = new Intent(getActivity(), TabGridViewActivity.class);
                 intent.putExtra("types", titles);
-                startActivity(intent);
+                intent.putExtra("invisible_types", invisbleTitles);
+
+                startActivityForResult(intent,1 );
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        titles = data.getStringArrayExtra("titles");
+        invisbleTitles = data.getStringArrayExtra("invisible_titles");
+        update();
     }
 
     @Override
@@ -86,14 +97,13 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
 
     }
 
-    public void update()
+    private void update()
     {
-        String[] titles2 = new String[]{"11", "22"};
         fragments.clear();
-        for(int i=0;i<titles2.length;i++) {
-            fragments.add(PageFragment.newInstance(titles2[i]));
+        for (String tmp_title : titles) {
+            fragments.add(PageFragment.newInstance(tmp_title));
         }
         Log.d("size", fragments.size()+"size");
-        fixedPagerAdapter.updateList(fragments, titles2);
+        fixedPagerAdapter.updateList(fragments, titles);
     }
 }

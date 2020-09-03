@@ -26,6 +26,11 @@ public class TabGridViewAdapter extends BaseAdapter {
             this.types.addAll(Arrays.asList(types));
 
     }
+
+    public String[] getTypes(){
+        return types.toArray(new String[0]);
+    }
+
     @Override
     public int getCount() {
         return types.size();
