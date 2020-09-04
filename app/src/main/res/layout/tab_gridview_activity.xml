@@ -8,12 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="chosed tabs"
-        android:textSize="20dp"/>
+        android:textSize="@dimen/tab_text_size"/>
 
     <GridView
         android:id="@+id/gd"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:numColumns="3"
         android:verticalSpacing="10dp"
         android:horizontalSpacing="10dp"
@@ -24,14 +24,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Remaining tabs"
-        android:textSize="20dp"/>
+        android:textSize="@dimen/tab_text_size"/>
 
     <GridView
         android:id="@+id/gd2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:numColumns="3"
         android:verticalSpacing="10dp"
         android:horizontalSpacing="10dp"
         />
+
+    <Button
+        android:id="@+id/return_bth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="确定"
+        />
+
 </LinearLayout>
