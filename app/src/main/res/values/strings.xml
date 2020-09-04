@@ -3,4 +3,8 @@
     <string name="wait_string">wait</string>
     <string name="xinwen">新闻</string>
     <string name="yiqingshuju">疫情数据</string>
+    <string name="julei">聚类</string>
+    <string name="zhiyixuezhe">知疫学者</string>
+    <string name="shitiguanxi">实体关系</string>
+    <string name="search_hint">搜索</string>
 </resources>
