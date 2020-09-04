@@ -73,8 +73,6 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                update();
-                Log.d("yyds",getActivity().toString());
                 Intent intent = new Intent(getActivity(), TabGridViewActivity.class);
                 intent.putExtra("types", titles);
                 intent.putExtra("invisible_types", invisbleTitles);
