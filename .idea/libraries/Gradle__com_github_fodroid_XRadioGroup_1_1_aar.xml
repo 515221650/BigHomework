@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.fodroid:XRadioGroup:1.1@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e2cdb9092fc414e6d6b14a4692ffb24b/jetified-XRadioGroup-1.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e2cdb9092fc414e6d6b14a4692ffb24b/jetified-XRadioGroup-1.1/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.fodroid/XRadioGroup/1.1/d5509dbfe1e5a2ea8a1a9bd5c96976c4dc43021f/XRadioGroup-1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
