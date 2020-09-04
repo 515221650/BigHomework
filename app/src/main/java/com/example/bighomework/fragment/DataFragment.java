@@ -1,7 +1,11 @@
 package com.example.bighomework.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -14,7 +18,15 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
+import com.bin.david.form.core.SmartTable;
+import com.bin.david.form.core.TableConfig;
+import com.bin.david.form.data.CellInfo;
+import com.bin.david.form.data.column.Column;
+import com.bin.david.form.data.format.bg.BaseCellBackgroundFormat;
+import com.bin.david.form.data.format.bg.ICellBackgroundFormat;
+import com.bin.david.form.data.table.TableData;
 import com.example.bighomework.R;
 import com.example.bighomework.common.DefineView;
 import com.github.mikephil.charting.charts.BarChart;
@@ -35,9 +47,11 @@ import java.util.List;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
+
 public class DataFragment extends BaseFragment implements DefineView {
     private View mView;
     private BarChart barChart;
+    private SmartTable<User> smartTable;
 
     @Nullable
     @Override
@@ -55,9 +69,76 @@ public class DataFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initView() {
+
         init_bar();
+        init_table();
     }
 
+    class User{
+        String name,portrait;
+        Integer age;
+        Long time=12L;
+    }
+
+    public void init_table()
+    {
+        Column<String> column1 = new Column<>("姓名", "name");
+        Column<Integer> column2 = new Column<>("年龄", "age");
+        Column<Long> column3 = new Column<>("更新时间", "time");
+        Column<String> column4 = new Column<>("头像", "portrait");
+        //如果是多层，可以通过.来实现多级查询
+        Column<String> column5 = new Column<>("班级", "class.className");
+        //组合列
+        Column totalColumn1 = new Column("组合列名",column1,column2);
+        //表格数据 datas是需要填充的数据
+        List<User> userList = new ArrayList<>();
+        userList.add(new User());
+        userList.add(new User());
+        userList.add(new User());
+        userList.add(new User());
+        final TableData<User> tableData = new TableData<>("表格名",userList,totalColumn1,column3);
+        //设置数据
+        smartTable = mView.findViewById(R.id.table);
+        //table.setZoom(true,3);是否缩放
+        ICellBackgroundFormat<Integer> backgroundFormat = new BaseCellBackgroundFormat<Integer>() {
+            @Override
+            public int getBackGroundColor(Integer position) {
+                if(position%2 == 1){
+                    return ContextCompat.getColor(getActivity(),R.color.tabBack);
+                }
+                return TableConfig.INVALID_COLOR;
+
+            }
+
+
+            @Override
+            public int getTextColor(Integer position) {
+                if(position%2 == 1) {
+                    return ContextCompat.getColor(getActivity(), R.color.white);
+                }
+                return TableConfig.INVALID_COLOR;
+            }
+        };
+        smartTable.getConfig().setYSequenceCellBgFormat(backgroundFormat);
+        smartTable.getConfig().setContentCellBackgroundFormat(new ICellBackgroundFormat<CellInfo>() {
+            @Override
+            public void drawBackground(Canvas canvas, Rect rect, CellInfo cellInfo, Paint paint) {
+                if(cellInfo.row%2==0){
+                    paint.clearShadowLayer();
+                    paint.setColor(getResources().getColor(R.color.tabBack));
+                    Log.d("??",paint.getColor()+"");
+                    canvas.drawRect(rect,paint);
+                }
+            }
+
+            @Override
+            public int getTextColor(CellInfo cellInfo) {
+                return 0;
+            }
+        });
+
+        smartTable.setTableData(tableData);
+    }
     public void init_bar(){
 
         barChart = (BarChart)mView.findViewById(R.id.bar_cart);

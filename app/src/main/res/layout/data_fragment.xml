@@ -3,11 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/yiqingshuju"/>
+        android:text="@string/yiqingshuju"
+        />
+    <com.bin.david.form.core.SmartTable
+    android:id="@+id/table"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    />
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/bar_cart"
         android:contentDescription="确诊数量"
