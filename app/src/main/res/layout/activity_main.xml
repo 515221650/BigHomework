@@ -7,19 +7,34 @@
     tools:context=".MainActivity"
 
     android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/search_out_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/tabBack"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="6dp"
+        android:paddingRight="15dp"
+
+        >
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_height"
+        android:autofillHints="@string/search_hint"
+        app:queryHint="@string/search_hint"
+        android:background="@drawable/search_bar"
+        />
+    </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/main_info_fragment"
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/divider"
-
-        >
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.example.bighomework.fragment.MainInfoFragment"/>
-    </FrameLayout>
+        android:layout_below="@+id/search_out_view"
+        />
     <View
         android:id="@+id/divider"
         android:layout_width="wrap_content"
@@ -42,12 +57,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <RadioButton
-                android:id="@+id/rb1"
+                android:id="@+id/rb_news"
+                android:layout_marginRight="@dimen/bth_margin2"
+                android:layout_marginLeft="@dimen/bth_margin2"
                 android:layout_width="@dimen/btn_size"
                 android:layout_height="@dimen/btn_size"
                 android:layout_marginBottom="@dimen/bth_margin"
                 android:layout_marginTop="@dimen/bth_margin"
-                android:layout_marginRight="100dp"
                 android:background="@drawable/bth2"
                 android:button="@null"
                 android:checked="true"
@@ -56,6 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/xinwen"
+                android:layout_gravity="center_horizontal"
                 android:textColor="@color/black"/>
 
         </LinearLayout>
@@ -65,16 +82,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <RadioButton
-                android:id="@+id/rb2"
+                android:id="@+id/rb_data"
+                android:layout_marginRight="@dimen/bth_margin2"
+                android:layout_marginLeft="@dimen/bth_margin2"
                 android:layout_width="@dimen/btn_size"
                 android:layout_height="@dimen/btn_size"
                 android:layout_marginBottom="@dimen/bth_margin"
                 android:layout_marginTop="@dimen/bth_margin"
                 android:background="@drawable/bth3"
                 android:button="@null"
-                android:layout_marginLeft="10dp"
                 />
             <TextView
+                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/yiqingshuju"
@@ -82,6 +101,77 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/rb_cate"
 
+                android:layout_width="@dimen/btn_size"
+                android:layout_height="@dimen/btn_size"
+                android:layout_marginBottom="@dimen/bth_margin"
+                android:layout_marginTop="@dimen/bth_margin"
+                android:background="@drawable/bth4"
+                android:button="@null"
+                android:layout_marginRight="@dimen/bth_margin2"
+                android:layout_marginLeft="@dimen/bth_margin2"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/julei"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/rb_doctor"
+                android:layout_width="@dimen/btn_size"
+                android:layout_height="@dimen/btn_size"
+                android:layout_marginBottom="@dimen/bth_margin"
+                android:layout_marginTop="@dimen/bth_margin"
+                android:background="@drawable/bth5"
+                android:button="@null"
+                android:layout_marginRight="@dimen/bth_margin2"
+                android:layout_marginLeft="@dimen/bth_margin2"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zhiyixuezhe"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/rb_relation"
+                android:layout_width="@dimen/btn_size"
+                android:layout_height="@dimen/btn_size"
+                android:layout_marginBottom="@dimen/bth_margin"
+                android:layout_marginTop="@dimen/bth_margin"
+                android:background="@drawable/bth6"
+                android:button="@null"
+                android:layout_marginRight="@dimen/bth_margin2"
+                android:layout_marginLeft="@dimen/bth_margin2"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/shitiguanxi"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
     </me.shihao.library.XRadioGroup>
 </RelativeLayout>
