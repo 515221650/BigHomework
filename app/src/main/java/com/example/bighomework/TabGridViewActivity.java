@@ -78,6 +78,7 @@ public class TabGridViewActivity extends AppCompatActivity implements DefineView
                 finish();
             }
         });
+
     }
 
     @Override
