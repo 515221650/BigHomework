@@ -2,4 +2,6 @@
 <resources>
     <dimen name="tab_size">20dp</dimen>
     <dimen name="tab_text_size">20sp</dimen>
+    <dimen name="btn_size">30dp</dimen>
+    <dimen name="bth_margin">5dp</dimen>
 </resources>

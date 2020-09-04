@@ -1,19 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/main_info_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/divider"
+
         >
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         class="com.example.bighomework.fragment.MainInfoFragment"/>
     </FrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:id="@+id/divider"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@drawable/divider"
+        android:layout_above="@+id/main_rg"
+        />
+    <me.shihao.library.XRadioGroup
+
+        android:id="@+id/main_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/rb1"
+                android:layout_width="@dimen/btn_size"
+                android:layout_height="@dimen/btn_size"
+                android:layout_marginBottom="@dimen/bth_margin"
+                android:layout_marginTop="@dimen/bth_margin"
+                android:layout_marginRight="100dp"
+                android:background="@drawable/bth2"
+                android:button="@null"
+                android:checked="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/xinwen"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/rb2"
+                android:layout_width="@dimen/btn_size"
+                android:layout_height="@dimen/btn_size"
+                android:layout_marginBottom="@dimen/bth_margin"
+                android:layout_marginTop="@dimen/bth_margin"
+                android:background="@drawable/bth3"
+                android:button="@null"
+                android:layout_marginLeft="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yiqingshuju"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+
+    </me.shihao.library.XRadioGroup>
+</RelativeLayout>
