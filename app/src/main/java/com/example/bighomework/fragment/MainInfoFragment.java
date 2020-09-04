@@ -28,7 +28,7 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private FixedPagerAdapter fixedPagerAdapter;
-    private String[] titles = new String[]{"news", "paper", "events"};
+    private String[] titles = new String[]{"news", "paper", "event"};
     private List<BaseFragment> fragments;
     @Nullable
     @Override

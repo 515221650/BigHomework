@@ -2,23 +2,45 @@ package com.example.bighomework.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.bighomework.R;
+import com.example.bighomework.adapter.NewsListAdapter;
 import com.example.bighomework.common.DefineView;
+import com.example.bighomework.util.NewsDigest;
 import com.scwang.smart.refresh.footer.BallPulseFooter;
 import com.scwang.smart.refresh.header.BezierRadarHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Objects;
+
+import static java.lang.Math.min;
 
 
 public class PageFragment extends BaseFragment implements DefineView {
@@ -27,8 +49,10 @@ public class PageFragment extends BaseFragment implements DefineView {
     private String message;
     private TextView tvPage;
     private RefreshLayout refreshLayout;
+    private ListView lvNews;
+    public NewsListAdapter newsListAdapter;
 
-    public static PageFragment newInstance(String extra){
+    public static PageFragment newInstance(String extra) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY, extra);
         PageFragment fragment = new PageFragment();
@@ -40,17 +64,16 @@ public class PageFragment extends BaseFragment implements DefineView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        if(bundle!=null)
-        {
+        if (bundle != null) {
             message = bundle.getString(KEY);
         }
+
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if(mView == null)
-        {
+        if (mView == null) {
             mView = inflater.inflate(R.layout.page_fragment_layout, container, false);
 
             initView();
@@ -64,13 +87,17 @@ public class PageFragment extends BaseFragment implements DefineView {
     @SuppressLint("ResourceAsColor")
     @Override
     public void initView() {
-        tvPage = (TextView)mView.findViewById(R.id.tv_page);
-        if(message!=null)
-        {
-            tvPage.setText(message);
-        }
+//        tvPage = (TextView)mView.findViewById(R.id.tv_page);
+//        if(message!=null)
+//        {
+//            tvPage.setText(message);
+//        }
+        lvNews = (ListView) mView.findViewById(R.id.lv_newslist);
+        newsListAdapter = new NewsListAdapter(getActivity());
+        lvNews.setAdapter(newsListAdapter);
 
-        refreshLayout = (RefreshLayout)mView.findViewById(R.id.refreshLayout);
+
+        refreshLayout = (RefreshLayout) mView.findViewById(R.id.refreshLayout);
         BezierRadarHeader bezierRadarHeader = new BezierRadarHeader(getActivity()).setEnableHorizontalDrag(true);
 //        bezierRadarHeader.setBackgroundColor(R.color.white);
 //        bezierRadarHeader.setPrimaryColor(R.color.white);
@@ -79,6 +106,9 @@ public class PageFragment extends BaseFragment implements DefineView {
 
         refreshLayout.setRefreshFooter(new BallPulseFooter(getActivity()).setSpinnerStyle(SpinnerStyle.Scale));
         refreshLayout.setEnableOverScrollBounce(true);//是否启用越界回弹
+
+        FetchNewsList process = new FetchNewsList();
+        process.execute();
 
 
     }
@@ -108,6 +138,71 @@ public class PageFragment extends BaseFragment implements DefineView {
 
     @Override
     public void binData() {
+
+    }
+
+
+    @SuppressLint("StaticFieldLeak")
+    private class FetchNewsList extends AsyncTask<Void, Void, Void> {
+        String newsClass = "";
+        @Override
+        protected Void doInBackground(Void... voids) {
+            newsClass = message.toLowerCase();
+            try {
+                URL url = new URL("https://covid-dashboard.aminer.cn/api/events/list?type="+newsClass+"&page=1&size=20");
+                StringBuilder data = new StringBuilder();
+                try {
+//                    Toast.makeText(getActivity(), "this is debug message！" + message, Toast.LENGTH_LONG).show();
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                    String line = "";
+                    while(line != null)
+                    {
+                        line = bufferedReader.readLine();
+                        data.append(line);
+                    }
+                    bufferedReader.close();
+                    inputStream.close();
+                    JSONObject JO = new JSONObject(data.toString());
+                    JSONArray JA2 = (JSONArray) JO.get("data");
+                    int NewsNum = JA2.length();
+                    for(int i=0; i<NewsNum; i++)
+                    {
+                        NewsDigest newsDigest = new NewsDigest();
+                        JSONObject JO2 = (JSONObject) JA2.get(i);
+                        newsDigest.setId((String) JO2.get("_id"));
+                        String _title = (String) JO2.get("title");
+                        boolean isEn = _title.substring(0, min(1, _title.length())).matches("^[a-zA-Z]*");
+                        int base = 1;
+                        if(isEn) base = 4;
+                        newsDigest.setTitle((_title.substring(0, min(20*base, _title.length()))));
+                        newsDigest.setTime((String) JO2.get("time"));
+                        String _source = (String) JO2.get("source");
+                        if(_source.equals("null"))
+                            newsDigest.setSource("");
+                        else newsDigest.setSource(_source);
+                        String _content = (String) JO2.get("content");
+                        newsDigest.setDigest((_content).substring(0, min(60*base, _content.length())));
+                        newsListAdapter.newsDigestArrayList.add(newsDigest);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            newsListAdapter.notifyDataSetChanged();
+        }
 
     }
 }
