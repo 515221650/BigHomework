@@ -2,12 +2,14 @@ package com.example.bighomework.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.bighomework.MainActivity;
+import com.example.bighomework.NewsDetailActivity;
 import com.example.bighomework.R;
 import com.example.bighomework.adapter.NewsListAdapter;
 import com.example.bighomework.common.DefineView;
@@ -132,6 +136,14 @@ public class PageFragment extends BaseFragment implements DefineView {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
                 refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+            }
+        });
+        lvNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> arg0, View arg1, int postion,long arg3) {
+                String clickId = newsListAdapter.newsDigestArrayList.get(postion).getId();
+                Intent intent = new Intent(arg0.getContext(), NewsDetailActivity.class);
+                intent.putExtra("ID", clickId);
+                startActivity(intent);
             }
         });
     }
