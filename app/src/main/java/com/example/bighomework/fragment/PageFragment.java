@@ -91,11 +91,7 @@ public class PageFragment extends BaseFragment implements DefineView {
     @SuppressLint("ResourceAsColor")
     @Override
     public void initView() {
-//        tvPage = (TextView)mView.findViewById(R.id.tv_page);
-//        if(message!=null)
-//        {
-//            tvPage.setText(message);
-//        }
+
         lvNews = (ListView) mView.findViewById(R.id.lv_newslist);
         newsListAdapter = new NewsListAdapter(getActivity());
         lvNews.setAdapter(newsListAdapter);
