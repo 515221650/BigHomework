@@ -7,4 +7,10 @@
     <string name="zhiyixuezhe">知疫学者</string>
     <string name="shitiguanxi">实体关系</string>
     <string name="search_hint">搜索</string>
+    <string name="title_activity_knowledge_graph">KnowledgeGraphActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 </resources>

@@ -44,6 +44,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 
+import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 
@@ -55,6 +56,10 @@ public class PageFragment extends BaseFragment implements DefineView {
     private RefreshLayout refreshLayout;
     private ListView lvNews;
     public NewsListAdapter newsListAdapter;
+
+    private int maxPage = 0;
+    int maxPageBound = -1;
+    private Boolean forward = false;
 
     public static PageFragment newInstance(String extra) {
         Bundle bundle = new Bundle();
@@ -124,14 +129,18 @@ public class PageFragment extends BaseFragment implements DefineView {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+                forward = true;
+                FetchNewsList process = new FetchNewsList();
+                process.execute();
             }
         });
         //noinspection NullableProblems
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+                forward = false;
+                FetchNewsList process = new FetchNewsList();
+                process.execute();
             }
         });
         lvNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -153,14 +162,47 @@ public class PageFragment extends BaseFragment implements DefineView {
     @SuppressLint("StaticFieldLeak")
     private class FetchNewsList extends AsyncTask<Void, Void, Void> {
         String newsClass = "";
+        final int pageSize = 20;
+
         @Override
         protected Void doInBackground(Void... voids) {
             newsClass = message.toLowerCase();
+            if(forward)
+            {
+                getContent(1, true);
+            }
+            else
+            {
+                if(maxPageBound == -1 || maxPage < maxPageBound) {
+                    maxPage++;
+                }
+                while(true)
+                {
+                    boolean res = getContent(maxPage, false);
+                    if(res || (maxPageBound == maxPage))
+                    {
+                        break;
+                    }
+                    else maxPage++;
+                }
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if(forward) refreshLayout.finishRefresh();
+            else refreshLayout.finishLoadMore();
+            newsListAdapter.notifyDataSetChanged();
+        }
+
+        private boolean getContent(int page, boolean ifforward)
+        {
+            boolean hasNewNews = false;
             try {
-                URL url = new URL("https://covid-dashboard.aminer.cn/api/events/list?type="+newsClass+"&page=1&size=20");
+                URL url = new URL("https://covid-dashboard.aminer.cn/api/events/list?type="+newsClass+"&page="+page+"&size="+pageSize);
                 StringBuilder data = new StringBuilder();
                 try {
-//                    Toast.makeText(getActivity(), "this is debug message！" + message, Toast.LENGTH_LONG).show();
                     HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                     InputStream inputStream = httpURLConnection.getInputStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -174,7 +216,10 @@ public class PageFragment extends BaseFragment implements DefineView {
                     inputStream.close();
                     JSONObject JO = new JSONObject(data.toString());
                     JSONArray JA2 = (JSONArray) JO.get("data");
+
                     int NewsNum = JA2.length();
+                    if(NewsNum < pageSize) maxPageBound = page;
+                    int posCnt = 0;
                     for(int i=0; i<NewsNum; i++)
                     {
                         NewsDigest newsDigest = new NewsDigest();
@@ -184,7 +229,7 @@ public class PageFragment extends BaseFragment implements DefineView {
                         boolean isEn = _title.substring(0, min(1, _title.length())).matches("^[a-zA-Z]*");
                         int base = 1;
                         if(isEn) base = 4;
-                        newsDigest.setTitle((_title.substring(0, min(20*base, _title.length()))));
+                        newsDigest.setTitle((_title.substring(0, min(30*base, _title.length()))));
                         newsDigest.setTime((String) JO2.get("time"));
                         String _source = (String) JO2.get("source");
                         if(_source.equals("null"))
@@ -192,24 +237,30 @@ public class PageFragment extends BaseFragment implements DefineView {
                         else newsDigest.setSource(_source);
                         String _content = (String) JO2.get("content");
                         newsDigest.setDigest((_content).substring(0, min(60*base, _content.length())));
-                        newsListAdapter.newsDigestArrayList.add(newsDigest);
-                    }
+                        if(!newsListAdapter.IdHashSet.contains(newsDigest.getId()))
+                        {
+                            hasNewNews = true;
+                            newsListAdapter.IdHashSet.add(newsDigest.getId());
+                            if(!ifforward)
+                                newsListAdapter.newsDigestArrayList.add(newsDigest);
+                            else
+                            {
+                                newsListAdapter.newsDigestArrayList.add(posCnt, newsDigest);
+                                posCnt++;
+                            }
+                        }
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                    }
+                    httpURLConnection.disconnect();
+
+                } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            return null;
-        }
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            newsListAdapter.notifyDataSetChanged();
+            return hasNewNews;
         }
 
     }

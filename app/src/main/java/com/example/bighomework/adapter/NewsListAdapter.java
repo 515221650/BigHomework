@@ -10,9 +10,11 @@ import com.example.bighomework.R;
 import com.example.bighomework.util.NewsDigest;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class NewsListAdapter extends BaseAdapter {
     public ArrayList<NewsDigest> newsDigestArrayList = new ArrayList<>();
+    public HashSet<String> IdHashSet = new HashSet<>();
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
