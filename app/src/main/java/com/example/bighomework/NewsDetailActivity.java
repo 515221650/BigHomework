@@ -2,8 +2,12 @@ package com.example.bighomework;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -35,6 +39,16 @@ public class NewsDetailActivity extends AppCompatActivity {
         tvContent = findViewById(R.id.tv_newsdetail_content);
         tvSource = findViewById(R.id.tv_newsdetail_source);
         tvTime = findViewById(R.id.tv_newsdetail_time);
+
+        Button buttonBack = findViewById(R.id.btn_news_back);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("yyds",this.toString());
+                finish();
+            }
+        });
+
         newsId = getIntent().getStringExtra("ID");
         FetchContent process = new FetchContent();
         process.execute();

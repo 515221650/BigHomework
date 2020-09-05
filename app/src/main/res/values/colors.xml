@@ -10,4 +10,7 @@
     <color name="orange">#FFA500</color>
     <color name="gray">#D5D5D5</color>
     <color name="garyDark">#808080</color>
+    <color name="lightBlue">#B0DCF9</color>
+    <color name="darkBlue">#134EA9</color>
+
 </resources>

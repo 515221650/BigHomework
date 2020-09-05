@@ -15,8 +15,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TableLayout;
 
+import com.example.bighomework.adapter.KnowledgePropertyListAdapter;
 import com.example.bighomework.common.DefineView;
 import com.example.bighomework.fragment.DataFragment;
+import com.example.bighomework.fragment.KnowledgeGraphFragment;
 import com.example.bighomework.fragment.MainInfoFragment;
 
 import me.shihao.library.XRadioGroup;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements DefineView {
     private RadioButton rb1,rb2;
     private MainInfoFragment mainInfoFragment;
     private DataFragment dataFragment;
+    private KnowledgeGraphFragment knowledgeGraphFragment;
     private XRadioGroup radioGroup;
     private Fragment currentFragment;
     private SearchView searchView;
@@ -45,14 +48,17 @@ public class MainActivity extends AppCompatActivity implements DefineView {
         radioGroup = (XRadioGroup)findViewById(R.id.main_rg);
         mainInfoFragment = new MainInfoFragment();
         dataFragment = new DataFragment();
-        searchView = (SearchView)findViewById(R.id.search_view);
+        knowledgeGraphFragment = new KnowledgeGraphFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+        transaction.add(R.id.fragment_container, knowledgeGraphFragment);
         transaction.add(R.id.fragment_container, dataFragment);
         transaction.add(R.id.fragment_container, mainInfoFragment);
 
         transaction.hide(dataFragment);
+        transaction.hide(knowledgeGraphFragment);
+
 
         transaction.commit();
 
@@ -61,8 +67,8 @@ public class MainActivity extends AppCompatActivity implements DefineView {
 
     @Override
     public void initValidData() {
-        ImageView imageView = (ImageView)searchView.findViewById(R.id.search_button);
-        imageView.setColorFilter(R.color.black);
+//        ImageView imageView = (ImageView)searchView.findViewById(R.id.search_button);
+//        imageView.setColorFilter(R.color.black);
     }
 
 
@@ -90,11 +96,13 @@ public class MainActivity extends AppCompatActivity implements DefineView {
                         transaction.hide(currentFragment).show(dataFragment).commit();
                         break;
                     case R.id.rb_relation:
-                        transaction.hide(currentFragment).show(dataFragment).commit();
+                        transaction.hide(currentFragment).show(knowledgeGraphFragment).commit();
+                        currentFragment = knowledgeGraphFragment;
                         break;
                 }
             }
         });
+
     }
 
     @Override
