@@ -113,7 +113,7 @@ public class PageFragment extends BaseFragment implements DefineView {
         refreshLayout.setEnableOverScrollBounce(true);//是否启用越界回弹
 
         FetchNewsList process = new FetchNewsList();
-        process.execute();
+        process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
     }
@@ -131,7 +131,7 @@ public class PageFragment extends BaseFragment implements DefineView {
             public void onRefresh(RefreshLayout refreshlayout) {
                 forward = true;
                 FetchNewsList process = new FetchNewsList();
-                process.execute();
+                process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         //noinspection NullableProblems
@@ -140,7 +140,7 @@ public class PageFragment extends BaseFragment implements DefineView {
             public void onLoadMore(RefreshLayout refreshlayout) {
                 forward = false;
                 FetchNewsList process = new FetchNewsList();
-                process.execute();
+                process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         lvNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -231,7 +231,7 @@ public class PageFragment extends BaseFragment implements DefineView {
                         if(isEn) base = 4;
                         newsDigest.setTitle((_title.substring(0, min(30*base, _title.length()))));
                         newsDigest.setTime((String) JO2.get("time"));
-                        String _source = (String) JO2.get("source");
+                        String _source = JO2.optString("source");
                         if(_source.equals("null"))
                             newsDigest.setSource("");
                         else newsDigest.setSource(_source);

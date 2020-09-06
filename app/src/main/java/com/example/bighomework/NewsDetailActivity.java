@@ -51,7 +51,7 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         newsId = getIntent().getStringExtra("ID");
         FetchContent process = new FetchContent();
-        process.execute();
+        process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 

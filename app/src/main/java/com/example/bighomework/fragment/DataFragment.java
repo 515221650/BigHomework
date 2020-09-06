@@ -1,8 +1,6 @@
 package com.example.bighomework.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -14,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,26 +23,23 @@ import com.bin.david.form.data.CellInfo;
 import com.bin.david.form.data.column.Column;
 import com.bin.david.form.data.format.bg.BaseCellBackgroundFormat;
 import com.bin.david.form.data.format.bg.ICellBackgroundFormat;
+import com.bin.david.form.data.format.draw.MultiLineDrawFormat;
+import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.data.table.TableData;
 import com.example.bighomework.R;
 import com.example.bighomework.common.DefineView;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static androidx.core.content.ContextCompat.getSystemService;
 
 
 public class DataFragment extends BaseFragment implements DefineView {
@@ -75,36 +69,78 @@ public class DataFragment extends BaseFragment implements DefineView {
     }
 
     class User{
-        String name,portrait;
-        Integer age;
-        Long time=12L;
+        Integer confirmed, suspected, cured, dead;
+        String name;
+        public User(String n, int con, int sus, int cur, int dea)
+        {
+            confirmed = con;
+            suspected = sus;
+            cured = cur;
+            dead = dea;
+            name = n;
+        }
     }
 
     public void init_table()
     {
-        Column<String> column1 = new Column<>("姓名", "name");
-        Column<Integer> column2 = new Column<>("年龄", "age");
-        Column<Long> column3 = new Column<>("更新时间", "time");
-        Column<String> column4 = new Column<>("头像", "portrait");
+        Column<String> column1 = new Column<>("省份", "name");
+        Column<Integer> column2 = new Column<>("确诊", "confirmed");
+        Column<Integer> column3 = new Column<>("疑似", "suspected");
+        Column<Integer> column4 = new Column<>("治愈", "cured");
         //如果是多层，可以通过.来实现多级查询
-        Column<String> column5 = new Column<>("班级", "class.className");
+        Column<Integer> column5 = new Column<>("死亡", "dead");
         //组合列
-        Column totalColumn1 = new Column("组合列名",column1,column2);
         //表格数据 datas是需要填充的数据
         List<User> userList = new ArrayList<>();
-        userList.add(new User());
-        userList.add(new User());
-        userList.add(new User());
-        userList.add(new User());
-        final TableData<User> tableData = new TableData<>("表格名",userList,totalColumn1,column3);
-        //设置数据
+        userList.add(new User("北京", 123, 34,234, 12));
+        userList.add(new User("上海", 123, 34,234, 12));
+        userList.add(new User("重庆", 123, 34,234, 12));
+        userList.add(new User("重庆", 123, 34,234, 12));
+        userList.add(new User("重庆", 123, 34,234, 12));
+        userList.add(new User("重庆", 123, 34,234, 12));
+        userList.add(new User("重庆", 123, 34,234, 12));
+        userList.add(new User("重庆", 123, 34,234, 12));userList.add(new User("重庆", 123, 34,234, 12));userList.add(new User("重庆", 123, 34,234, 12));
+        userList.add(new User("重庆", 123, 34,234, 12));
+        userList.add(new User("重庆", 123, 34,234, 12));userList.add(new User("重庆", 123, 34,234, 12));
+        userList.add(new User("重庆", 123, 34,234, 12));
+        userList.add(new User("重庆", 123, 34,234, 12));userList.add(new User("重庆", 123, 34,234, 12));
+
+
+
+
+
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));
+        userList.add(new User("天津", 123, 34,234, 12));userList.add(new User("天津", 123, 34,234, 12));
+
+
+
+        final TableData<User> tableData = new TableData<>("国内疫情数据统计",userList, column1, column2,column3, column4, column5);
+        //设置数据,
         smartTable = mView.findViewById(R.id.table);
         //table.setZoom(true,3);是否缩放
         ICellBackgroundFormat<Integer> backgroundFormat = new BaseCellBackgroundFormat<Integer>() {
             @Override
             public int getBackGroundColor(Integer position) {
                 if(position%2 == 1){
-                    return ContextCompat.getColor(getActivity(),R.color.tabBack);
+                    return ContextCompat.getColor(getActivity(),R.color.lightBlue);
                 }
                 return TableConfig.INVALID_COLOR;
 
@@ -120,12 +156,17 @@ public class DataFragment extends BaseFragment implements DefineView {
             }
         };
         smartTable.getConfig().setYSequenceCellBgFormat(backgroundFormat);
+        smartTable.getConfig().setFixedTitle(true);
+        smartTable.getConfig().setMinTableWidth(1100);
+        smartTable.getConfig().setTableTitleStyle(new FontStyle(50,0));
+        smartTable.getConfig().setShowXSequence(false);
+        smartTable.getConfig().setShowYSequence(false);
         smartTable.getConfig().setContentCellBackgroundFormat(new ICellBackgroundFormat<CellInfo>() {
             @Override
             public void drawBackground(Canvas canvas, Rect rect, CellInfo cellInfo, Paint paint) {
                 if(cellInfo.row%2==0){
                     paint.clearShadowLayer();
-                    paint.setColor(getResources().getColor(R.color.tabBack));
+                    paint.setColor(getResources().getColor(R.color.lightBlue));
                     Log.d("??",paint.getColor()+"");
                     canvas.drawRect(rect,paint);
                 }
