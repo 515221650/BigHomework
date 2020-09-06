@@ -1,6 +1,8 @@
 package com.example.bighomework.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +46,7 @@ public class NewsListAdapter extends BaseAdapter {
         public TextView tvTitle, tvDigest, tvTime, tvSource;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         ViewHolder holder = null;
@@ -65,6 +68,22 @@ public class NewsListAdapter extends BaseAdapter {
         holder.tvDigest.setText(newsDigestArrayList.get(position).getDigest());
         holder.tvTime.setText(newsDigestArrayList.get(position).getTime());
         holder.tvSource.setText(newsDigestArrayList.get(position).getSource());
+
+        Log.d("hasread", position + " " + newsDigestArrayList.get(position).getHasRead());
+        if(newsDigestArrayList.get(position).getHasRead())
+        {
+            holder.tvTitle.setTextColor(mContext.getResources().getColor(R.color.garyDark));
+            holder.tvSource.setTextColor(mContext.getResources().getColor(R.color.gray));
+            holder.tvDigest.setTextColor(mContext.getResources().getColor(R.color.gray));
+            holder.tvTime.setTextColor(mContext.getResources().getColor(R.color.gray));
+        }
+        else
+        {
+            holder.tvTitle.setTextColor(mContext.getResources().getColor(R.color.black));
+            holder.tvSource.setTextColor(mContext.getResources().getColor(R.color.garyDark));
+            holder.tvDigest.setTextColor(mContext.getResources().getColor(R.color.garyDark));
+            holder.tvTime.setTextColor(mContext.getResources().getColor(R.color.garyDark));
+        }
 
         return view;
     }

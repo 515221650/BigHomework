@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.bighomework.database.NewsHistory;
+import com.example.bighomework.database.NewsHistoryDao;
+import com.example.bighomework.database.NewsHistoryDatabase;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +25,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 public class NewsDetailActivity extends AppCompatActivity {
     String newsId = "";
@@ -31,6 +36,9 @@ public class NewsDetailActivity extends AppCompatActivity {
 
     TextView tvTitle, tvContent, tvSource, tvTime;
 
+    private NewsHistoryDatabase newsHistoryDatabase;
+    private NewsHistoryDao newsHistoryDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +47,8 @@ public class NewsDetailActivity extends AppCompatActivity {
         tvContent = findViewById(R.id.tv_newsdetail_content);
         tvSource = findViewById(R.id.tv_newsdetail_source);
         tvTime = findViewById(R.id.tv_newsdetail_time);
+        newsHistoryDatabase = NewsHistoryDatabase.getDatabase(this);
+        newsHistoryDao = newsHistoryDatabase.getNewsHistoryDao();
 
         Button buttonBack = findViewById(R.id.btn_news_back);
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +62,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         newsId = getIntent().getStringExtra("ID");
         FetchContent process = new FetchContent();
         process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
     }
 
 
@@ -95,6 +106,23 @@ public class NewsDetailActivity extends AppCompatActivity {
             tvTime.setText(newsTime);
             tvTitle.setText(newsTitle);
             tvSource.setText(newsSource);
+
+            StoreHistory storeHistory = new StoreHistory();
+            storeHistory.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+    }
+
+    public class StoreHistory extends AsyncTask<Void, Void, Void>
+    {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            List<NewsHistory> his = newsHistoryDao.getNewsWithId(newsId);
+            if(his.size() == 0)
+            {
+                newsHistoryDao.insertNewsHistory(new NewsHistory(newsId, newsTitle, newsTime, newsSource, newsContent));
+            }
+
+            return null;
         }
     }
 }
