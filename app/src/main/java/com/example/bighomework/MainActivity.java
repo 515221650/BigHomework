@@ -5,12 +5,15 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -25,6 +28,7 @@ import com.example.bighomework.database.NewsSearchItemDatabase;
 import com.example.bighomework.fragment.DataFragment;
 import com.example.bighomework.fragment.KnowledgeGraphFragment;
 import com.example.bighomework.fragment.MainInfoFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +55,10 @@ public class MainActivity extends AppCompatActivity implements DefineView {
     private NewsSearchItemDao newsSearchItemDao;
     private NewsSearchItemDatabase newsSearchItemDatabase;
 
+    FloatingActionButton fab, fabHis, fabFavor;
+    Animation fabOpen, fabClose, rotateForward, rotateBackward;
+    boolean isOpen = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +76,15 @@ public class MainActivity extends AppCompatActivity implements DefineView {
     @Override
     public void initView() {
         radioGroup = (XRadioGroup)findViewById(R.id.main_rg);
+
+        fab = findViewById(R.id.fab_more);
+        fabFavor = findViewById(R.id.fab_fav);
+        fabHis = findViewById(R.id.fab_his);
+        fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open);
+        fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close);
+        rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward);
+        rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward);
+
         mainInfoFragment = new MainInfoFragment();
         dataFragment = new DataFragment();
         knowledgeGraphFragment = new KnowledgeGraphFragment();
@@ -127,6 +144,27 @@ public class MainActivity extends AppCompatActivity implements DefineView {
             }
         });
 
+        fab.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                animateFab();
+            }
+        });
+        fabHis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+                startActivity(intent);
+            }
+        });
+        fabFavor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, FavorActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -180,6 +218,28 @@ public class MainActivity extends AppCompatActivity implements DefineView {
 
 
             return null;
+        }
+    }
+
+    private void animateFab()
+    {
+        if(isOpen)
+        {
+            fab.startAnimation(rotateBackward);
+            fabFavor.startAnimation(fabClose);
+            fabHis.startAnimation(fabClose);
+            fabHis.setClickable(false);
+            fabFavor.setClickable(false);
+            isOpen = false;
+        }
+        else
+        {
+            fab.startAnimation(rotateForward);
+            fabFavor.startAnimation(fabOpen);
+            fabHis.startAnimation(fabOpen);
+            fabHis.setClickable(true);
+            fabFavor.setClickable(true);
+            isOpen = true;
         }
     }
 }

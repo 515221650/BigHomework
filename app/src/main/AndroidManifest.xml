@@ -17,8 +17,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NewsSearchActivity"
+        <activity android:name=".FavorActivity"
             android:theme="@style/FullScreenTheme"></activity>
+        <activity
+            android:name=".NewsDetailOfflineActivity"
+            android:theme="@style/FullScreenTheme" />
+        <activity
+            android:name=".HistoryActivity"
+            android:theme="@style/FullScreenTheme" />
+        <activity
+            android:name=".NewsSearchActivity"
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".NewsDetailActivity"
             android:theme="@style/FullScreenTheme" />
@@ -31,7 +40,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TabGridViewActivity" />
+        <activity
+            android:name=".TabGridViewActivity"
+            android:theme="@style/FullScreenTheme" />
     </application>
 
 </manifest>

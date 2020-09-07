@@ -13,4 +13,8 @@ public interface NewsHistoryDao {
 
     @Query("SELECT * FROM NewsHistory WHERE news_id = :id")
     List<NewsHistory> getNewsWithId(String id);
+
+    @Query("SELECT * FROM NewsHistory ORDER BY _ID DESC")
+    List<NewsHistory> getAllHis();
+
 }
