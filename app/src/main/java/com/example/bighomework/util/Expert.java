@@ -1,6 +1,8 @@
 package com.example.bighomework.util;
 
-public class Expert
+import java.io.Serializable;
+
+public class Expert implements Serializable
 {
     public String name, name_zh;
     public String bio, affiliation, edu, work;

@@ -2,6 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
     <LinearLayout
         android:id="@+id/ll_knowledge_title"
         android:layout_width="match_parent"
@@ -45,108 +55,6 @@
                 android:text="Nan shanzhong"
                 android:textColor="@color/garyDark"/>
             <LinearLayout
-                android:id="@+id/expert_index"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/index_h"
-                    android:textColor="@color/white"
-                    android:text="H"
-                    android:textSize="15sp"
-                    android:paddingRight="5dp"
-                    android:paddingLeft="5dp"/>
-                <TextView
-                    android:id="@+id/index_h"
-                    android:layout_width="35dp"
-                    android:paddingLeft="3dp"
-                    android:textSize="@dimen/number_size"
-                    android:gravity="center_vertical"
-                    android:layout_height="wrap_content"
-                    android:text="21323"/>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/index_a"
-                    android:textColor="@color/white"
-                    android:text="A"
-                    android:textSize="15sp"
-                    android:paddingRight="5dp"
-                    android:paddingLeft="5dp"/>
-                <TextView
-                    android:id="@+id/index_a"
-                    android:layout_width="35dp"
-                    android:paddingLeft="3dp"
-                    android:gravity="center_horizontal"
-                    android:textSize="@dimen/number_size"
-                    android:layout_height="wrap_content"
-                    android:text="213"/>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/index_s"
-                    android:textColor="@color/white"
-                    android:text="S"
-                    android:textSize="15sp"
-                    android:paddingRight="5dp"
-                    android:paddingLeft="5dp"/>
-                <TextView
-                    android:id="@+id/index_s"
-                    android:layout_width="35dp"
-                    android:paddingLeft="3dp"
-                    android:gravity="center_horizontal"
-                    android:textSize="@dimen/number_size"
-                    android:layout_height="wrap_content"
-                    android:text="213"/>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/index_c"
-                    android:textColor="@color/white"
-                    android:text="C"
-                    android:textSize="15sp"
-                    android:paddingRight="5dp"
-                    android:paddingLeft="5dp"/>
-                <TextView
-                    android:id="@+id/index_c"
-                    android:layout_width="35dp"
-                    android:paddingLeft="3dp"
-                    android:gravity="center_horizontal"
-                    android:textSize="@dimen/number_size"
-                    android:layout_height="wrap_content"
-                    android:text="213"/>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/index_p"
-                    android:textColor="@color/white"
-                    android:text="P"
-                    android:textSize="15sp"
-                    android:paddingRight="5dp"
-                    android:paddingLeft="5dp"/>
-                <TextView
-                    android:id="@+id/index_p"
-                    android:layout_width="35dp"
-                    android:paddingLeft="3dp"
-                    android:gravity="center_horizontal"
-                    android:textSize="@dimen/number_size"
-                    android:layout_height="wrap_content"
-                    android:text="213"/>
-
-
-            </LinearLayout>
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -179,8 +87,9 @@
             android:id="@+id/bio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lineSpacingMultiplier="1.3"
+            android:lineSpacingMultiplier="1.1"
             android:paddingLeft="3dp"
+            android:layout_marginBottom="20dp"
             android:text="@string/example_text"
             android:textSize="@dimen/content_size" />
     </LinearLayout>
@@ -200,8 +109,9 @@
             android:id="@+id/edu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lineSpacingMultiplier="1.3"
+            android:lineSpacingMultiplier="1.1"
             android:paddingLeft="3dp"
+            android:layout_marginBottom="20dp"
             android:text="@string/example_text"
             android:textSize="@dimen/content_size" />
     </LinearLayout>
@@ -220,9 +130,12 @@
             android:id="@+id/work"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lineSpacingMultiplier="1.3"
+            android:lineSpacingMultiplier="1.1"
             android:paddingLeft="3dp"
+            android:layout_marginBottom="20dp"
             android:text="@string/example_text"
             android:textSize="@dimen/content_size" />
     </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

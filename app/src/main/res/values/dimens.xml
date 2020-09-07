@@ -15,5 +15,5 @@
     <dimen name="barChar_height">500dp</dimen>
     <dimen name="data_bottom">100dp</dimen>
     <dimen name="number_size">11sp</dimen>
-    <dimen name="content_size">20sp</dimen>
+    <dimen name="content_size">17sp</dimen>
 </resources>

@@ -4,18 +4,43 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
+    <RadioGroup
+        android:id="@+id/rg_expert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorColor="@color/white"
-        app:tabSelectedTextColor="@color/white"
-        app:tabIndicatorHeight="3dp"
-        app:tabTextColor="@color/white"/>
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
+        <RadioButton
+            android:id="@+id/rb11"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="知疫学者"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:button="@null"
+            android:checked="true"
+            android:background="@drawable/bth_expert"/>
+        <RadioButton
+            android:id="@+id/rb22"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="追忆学者"
+            android:button="@null"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/bth_expert_pass"/>
+
+    </RadioGroup>
     <ListView
         android:id="@+id/expert_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:divider="#00000000"
+        android:dividerHeight="10dp">
 
     </ListView>
 </LinearLayout>
