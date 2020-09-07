@@ -1,24 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     >
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/data_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/tabBack"
+        app:tabIndicatorColor="@color/white"
+        app:tabSelectedTextColor="@color/white"
+        app:tabIndicatorHeight="3dp"
+        app:tabTextColor="@color/white"/>
+    <com.example.bighomework.view.CustomScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/ll_bar_char"
+            android:layout_width="match_parent"
+            android:layout_height="400dp">
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/bar_cart"
+                android:contentDescription="确诊数量"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:ignore="HardcodedText"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/divider"/>
+        <LinearLayout
+            android:id="@+id/ll_table_out"
+            android:layout_width="match_parent"
+            android:layout_height="1000dp"
+            android:layout_marginBottom="@dimen/data_bottom">
+            <com.bin.david.form.core.SmartTable
+                android:id="@+id/table_out"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/divider"/>
+        <LinearLayout
+            android:id="@+id/ll_table_in"
+            android:layout_width="match_parent"
+            android:layout_height="1000dp"
+            android:layout_marginBottom="@dimen/data_bottom">
+            <com.bin.david.form.core.SmartTable
+                android:id="@+id/table_in"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    </com.example.bighomework.view.CustomScrollView>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/yiqingshuju"
         />
-    <com.bin.david.form.core.SmartTable
-    android:id="@+id/table"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    />
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/bar_cart"
-        android:contentDescription="确诊数量"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </LinearLayout>

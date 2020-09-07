@@ -18,6 +18,7 @@ import android.widget.TableLayout;
 import com.example.bighomework.adapter.KnowledgePropertyListAdapter;
 import com.example.bighomework.common.DefineView;
 import com.example.bighomework.fragment.DataFragment;
+import com.example.bighomework.fragment.ExpertFragment;
 import com.example.bighomework.fragment.KnowledgeGraphFragment;
 import com.example.bighomework.fragment.MainInfoFragment;
 
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements DefineView {
     private RadioButton rb1,rb2;
     private MainInfoFragment mainInfoFragment;
     private DataFragment dataFragment;
+    private ExpertFragment expertFragment;
     private KnowledgeGraphFragment knowledgeGraphFragment;
     private XRadioGroup radioGroup;
     private Fragment currentFragment;
@@ -48,14 +50,18 @@ public class MainActivity extends AppCompatActivity implements DefineView {
         radioGroup = (XRadioGroup)findViewById(R.id.main_rg);
         mainInfoFragment = new MainInfoFragment();
         dataFragment = new DataFragment();
+        expertFragment = new ExpertFragment();
         knowledgeGraphFragment = new KnowledgeGraphFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         transaction.add(R.id.fragment_container, knowledgeGraphFragment);
         transaction.add(R.id.fragment_container, dataFragment);
+        transaction.add(R.id.fragment_container, expertFragment);
         transaction.add(R.id.fragment_container, mainInfoFragment);
 
+
+        transaction.hide(expertFragment);
         transaction.hide(dataFragment);
         transaction.hide(knowledgeGraphFragment);
 
@@ -93,7 +99,8 @@ public class MainActivity extends AppCompatActivity implements DefineView {
                         transaction.hide(currentFragment).show(dataFragment).commit();
                         break;
                     case R.id.rb_doctor:
-                        transaction.hide(currentFragment).show(dataFragment).commit();
+                        transaction.hide(currentFragment).show(expertFragment).commit();
+                        currentFragment = expertFragment;
                         break;
                     case R.id.rb_relation:
                         transaction.hide(currentFragment).show(knowledgeGraphFragment).commit();

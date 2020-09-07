@@ -1,4 +1,4 @@
-package com.example.bighomework;
+package com.example.bighomework.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+
+import com.example.bighomework.R;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

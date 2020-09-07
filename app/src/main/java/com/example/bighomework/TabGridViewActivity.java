@@ -1,8 +1,10 @@
 package com.example.bighomework;
 
-import android.app.Activity;
+import android.animation.Animator;
+import android.animation.LayoutTransition;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,13 +14,14 @@ import android.widget.GridView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bighomework.adapter.TabGridViewAdapter;
 import com.example.bighomework.common.DefineView;
-import com.google.android.material.tabs.TabLayout;
 
 public class TabGridViewActivity extends AppCompatActivity implements DefineView {
     private GridView mGv1, mGv2;
     private TabGridViewAdapter tabGridViewAdapter1, tabGridViewAdapter2;
     private Button button;
+    private LayoutTransition mTransitioner1, mTransitioner2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,44 @@ public class TabGridViewActivity extends AppCompatActivity implements DefineView
         mGv1 = (GridView)findViewById(R.id.gd);
         mGv2 = (GridView)findViewById(R.id.gd2);
         button = (Button)findViewById(R.id.return_bth);
+        mTransitioner1 = new LayoutTransition();
+        mGv1.setLayoutTransition(mTransitioner1);
+        mTransitioner2 = new LayoutTransition();
+        mGv2.setLayoutTransition(mTransitioner2);
+        setTransition();
+    }
+
+
+
+    private void setTransition() {
+        /**
+         * 添加View时过渡动画效果
+         */
+//        ObjectAnimator addAnimator = ObjectAnimator.ofFloat(null, "rotationY", 0, 90,0).
+//                setDuration(mTransitioner.getDuration(LayoutTransition.APPEARING));
+//        mTransitioner.setAnimator(LayoutTransition.APPEARING, addAnimator);
+
+        ObjectAnimator addAnimator1 = ObjectAnimator.ofFloat(null, "TranslationY", 400, 50).
+                setDuration(mTransitioner1.getDuration(LayoutTransition.APPEARING));
+        mTransitioner1.setAnimator(LayoutTransition.APPEARING, addAnimator1);
+
+
+        ObjectAnimator addAnimator2 = ObjectAnimator.ofFloat(null, "TranslationY", -350, 50).
+                setDuration(mTransitioner2.getDuration(LayoutTransition.APPEARING));
+        mTransitioner2.setAnimator(LayoutTransition.APPEARING, addAnimator2);
+        /**
+         * 移除View时过渡动画效果
+         */
+//        ObjectAnimator removeAnimator = ObjectAnimator.ofFloat(null, "TranslationY", 0, 200).
+//                setDuration(mTransitioner.getDuration(LayoutTransition.DISAPPEARING));
+//        mTransitioner.setAnimator(LayoutTransition.DISAPPEARING, removeAnimator);
+
+        /**
+         * view 动画改变时，布局中的每个子view动画的时间间隔
+         */
+//        mTransitioner.setStagger(LayoutTransition.CHANGE_APPEARING, 30);
+//        mTransitioner.setStagger(LayoutTransition.CHANGE_DISAPPEARING, 300);
+
     }
 
     @Override

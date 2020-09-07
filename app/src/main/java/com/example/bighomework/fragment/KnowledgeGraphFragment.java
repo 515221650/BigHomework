@@ -205,10 +205,10 @@ public class KnowledgeGraphFragment extends Fragment {
             tvTitle.setText(titleTXT);
             tvIntro.setText(introTXT);
 
-            knowledgeItemListAdapter.notifyDataSetChanged();
-            knowledgePropertyListAdapter.notifyDataSetChanged();
             setListViewHeightBasedOnChildren(lvRelation);
             setListViewHeightBasedOnChildren(lvProperty);
+            knowledgeItemListAdapter.notifyDataSetChanged();
+            knowledgePropertyListAdapter.notifyDataSetChanged();
             Log.d("log pic ", imgUrl);
             Glide.with(getContext()).load(imgUrl).into(ivPic);
         }
