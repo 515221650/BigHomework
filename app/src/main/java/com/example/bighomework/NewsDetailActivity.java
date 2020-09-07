@@ -7,8 +7,18 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.bighomework.database.NewsFavor;
+import com.example.bighomework.database.NewsFavorDao;
+import com.example.bighomework.database.NewsFavorDatabase;
+import com.example.bighomework.database.NewsHistory;
+import com.example.bighomework.database.NewsHistoryDao;
+import com.example.bighomework.database.NewsHistoryDatabase;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +31,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 public class NewsDetailActivity extends AppCompatActivity {
     String newsId = "";
@@ -31,6 +42,15 @@ public class NewsDetailActivity extends AppCompatActivity {
 
     TextView tvTitle, tvContent, tvSource, tvTime;
 
+    private NewsHistoryDatabase newsHistoryDatabase;
+    private NewsHistoryDao newsHistoryDao;
+    private NewsFavorDatabase newsFavorDatabase;
+    private NewsFavorDao newsFavorDao;
+
+    FloatingActionButton fab, fabShare, fabFavor;
+    Animation fabOpen, fabClose, rotateForward, rotateBackward;
+    boolean isOpen = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +59,10 @@ public class NewsDetailActivity extends AppCompatActivity {
         tvContent = findViewById(R.id.tv_newsdetail_content);
         tvSource = findViewById(R.id.tv_newsdetail_source);
         tvTime = findViewById(R.id.tv_newsdetail_time);
+        newsHistoryDatabase = NewsHistoryDatabase.getDatabase(this);
+        newsHistoryDao = newsHistoryDatabase.getNewsHistoryDao();
+        newsFavorDatabase = NewsFavorDatabase.getDatabase(this);
+        newsFavorDao = newsFavorDatabase.getNewsFavorDao();
 
         Button buttonBack = findViewById(R.id.btn_news_back);
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +75,15 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         newsId = getIntent().getStringExtra("ID");
         FetchContent process = new FetchContent();
-        process.execute();
+        process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        fab = findViewById(R.id.fab_more);
+        fabFavor = findViewById(R.id.fab_fav);
+        fabShare = findViewById(R.id.fab_share);
+        fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open);
+        fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close);
+        rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward);
+        rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward);
     }
 
 
@@ -95,6 +127,73 @@ public class NewsDetailActivity extends AppCompatActivity {
             tvTime.setText(newsTime);
             tvTitle.setText(newsTitle);
             tvSource.setText(newsSource);
+
+            StoreHistory storeHistory = new StoreHistory();
+            storeHistory.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+            fab.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    animateFab();
+                }
+            });
+            fabFavor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    StoreFavor process = new StoreFavor();
+                    process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            });
+        }
+    }
+
+    public class StoreHistory extends AsyncTask<Void, Void, Void>
+    {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            List<NewsHistory> his = newsHistoryDao.getNewsWithId(newsId);
+            if(his.size() == 0)
+            {
+                newsHistoryDao.insertNewsHistory(new NewsHistory(newsId, newsTitle, newsTime, newsSource, newsContent));
+            }
+
+            return null;
+        }
+    }
+
+    public class StoreFavor extends AsyncTask<Void, Void, Void>
+    {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            List<NewsFavor> fav = newsFavorDao.getNewsWithId(newsId);
+            if(fav.size() == 0)
+            {
+                newsFavorDao.insertNewsFavor(new NewsFavor(newsId, newsTitle, newsTime, newsSource, newsContent));
+            }
+
+            return null;
+        }
+    }
+
+    private void animateFab()
+    {
+        if(isOpen)
+        {
+            fab.startAnimation(rotateBackward);
+            fabFavor.startAnimation(fabClose);
+            fabShare.startAnimation(fabClose);
+            fabShare.setClickable(false);
+            fabFavor.setClickable(false);
+            isOpen = false;
+        }
+        else
+        {
+            fab.startAnimation(rotateForward);
+            fabFavor.startAnimation(fabOpen);
+            fabShare.startAnimation(fabOpen);
+            fabShare.setClickable(true);
+            fabFavor.setClickable(true);
+            isOpen = true;
         }
     }
 }

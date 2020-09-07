@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HistoryActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_his"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/tabBack"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="6dp"
+
+        >
+
+        <Button
+            android:id="@+id/btn_his_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:background="@mipmap/back" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/btn_his_back"
+            android:paddingLeft="20dp"
+            android:text="历史记录"
+            android:textColor="@color/white"
+            android:textSize="25sp"/>
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/lv_his"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_his"/>
+
+
+</RelativeLayout>

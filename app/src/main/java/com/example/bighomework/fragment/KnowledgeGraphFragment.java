@@ -85,7 +85,7 @@ public class KnowledgeGraphFragment extends Fragment {
                 Log.d("tagg", query);
                 FetchKnowledge process = new FetchKnowledge();
                 process.queryStr = query;
-                process.execute();
+                process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 return true;
             }
 
@@ -138,6 +138,7 @@ public class KnowledgeGraphFragment extends Fragment {
                     }
                     bufferedReader.close();
                     inputStream.close();
+                    httpURLConnection.disconnect();
                     Log.d("return val", data.toString());
                     JSONObject JO = new JSONObject(data.toString());
                     JSONArray JA2 = (JSONArray) JO.get("data");
@@ -209,6 +210,7 @@ public class KnowledgeGraphFragment extends Fragment {
             setListViewHeightBasedOnChildren(lvProperty);
             knowledgeItemListAdapter.notifyDataSetChanged();
             knowledgePropertyListAdapter.notifyDataSetChanged();
+
             Log.d("log pic ", imgUrl);
             Glide.with(getContext()).load(imgUrl).into(ivPic);
         }
@@ -224,6 +226,7 @@ public class KnowledgeGraphFragment extends Fragment {
 
         int totalHeight = 0;
         for (int i = 0, len = listAdapter.getCount(); i < len; i++) { // listAdapter.getCount()返回数据项的数目
+            Log.d("getcount", "is "+listAdapter.getCount());
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(0, 0); // 计算子项View 的宽高
             totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度

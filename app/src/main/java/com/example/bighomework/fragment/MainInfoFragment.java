@@ -1,14 +1,13 @@
 package com.example.bighomework.fragment;
 
 import android.content.Intent;
-import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TableLayout;
+import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +17,7 @@ import com.example.bighomework.R;
 import com.example.bighomework.TabGridViewActivity;
 import com.example.bighomework.adapter.FixedPagerAdapter;
 import com.example.bighomework.common.DefineView;
+import com.example.bighomework.NewsSearchActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -28,9 +28,11 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private FixedPagerAdapter fixedPagerAdapter;
-    private String[] titles = new String[]{"news", "paper", "event"};
+    private String[] titles = new String[]{"news", "paper"};
     private String[] invisbleTitles = new String[]{};
     private List<BaseFragment> fragments;
+    private SearchView searchView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
     public void initView() {
         tabLayout = (TabLayout)mView.findViewById(R.id.tab_layout);
         viewPager = (ViewPager)mView.findViewById(R.id.view_pager);
+        searchView = mView.findViewById(R.id.search_view_news_main);
 
     }
 
@@ -78,6 +81,22 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
                 intent.putExtra("invisible_types", invisbleTitles);
 
                 startActivityForResult(intent,1 );
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("tagg", query);
+                Intent intent = new Intent(getActivity(), NewsSearchActivity.class);
+                intent.putExtra("keyword", query);
+                startActivity(intent);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
             }
         });
     }

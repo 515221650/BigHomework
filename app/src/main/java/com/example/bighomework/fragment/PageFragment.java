@@ -23,6 +23,9 @@ import com.example.bighomework.NewsDetailActivity;
 import com.example.bighomework.R;
 import com.example.bighomework.adapter.NewsListAdapter;
 import com.example.bighomework.common.DefineView;
+import com.example.bighomework.database.NewsHistory;
+import com.example.bighomework.database.NewsHistoryDao;
+import com.example.bighomework.database.NewsHistoryDatabase;
 import com.example.bighomework.util.NewsDigest;
 import com.scwang.smart.refresh.footer.BallPulseFooter;
 import com.scwang.smart.refresh.header.BezierRadarHeader;
@@ -42,6 +45,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.Objects;
 
 import static java.lang.Math.max;
@@ -61,6 +65,9 @@ public class PageFragment extends BaseFragment implements DefineView {
     int maxPageBound = -1;
     private Boolean forward = false;
 
+    private NewsHistoryDatabase newsHistoryDatabase;
+    private NewsHistoryDao newsHistoryDao;
+
     public static PageFragment newInstance(String extra) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY, extra);
@@ -79,6 +86,12 @@ public class PageFragment extends BaseFragment implements DefineView {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        newsListAdapter.notifyDataSetChanged();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -89,6 +102,7 @@ public class PageFragment extends BaseFragment implements DefineView {
             initValidData();
             initListener();
             binData();
+            newsListAdapter.notifyDataSetChanged();
         }
         return mView;
     }
@@ -113,13 +127,15 @@ public class PageFragment extends BaseFragment implements DefineView {
         refreshLayout.setEnableOverScrollBounce(true);//是否启用越界回弹
 
         FetchNewsList process = new FetchNewsList();
-        process.execute();
+        process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
     }
 
     @Override
     public void initValidData() {
+        newsHistoryDatabase = NewsHistoryDatabase.getDatabase(getActivity());
+        newsHistoryDao = newsHistoryDatabase.getNewsHistoryDao();
 
     }
 
@@ -131,7 +147,7 @@ public class PageFragment extends BaseFragment implements DefineView {
             public void onRefresh(RefreshLayout refreshlayout) {
                 forward = true;
                 FetchNewsList process = new FetchNewsList();
-                process.execute();
+                process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         //noinspection NullableProblems
@@ -140,12 +156,13 @@ public class PageFragment extends BaseFragment implements DefineView {
             public void onLoadMore(RefreshLayout refreshlayout) {
                 forward = false;
                 FetchNewsList process = new FetchNewsList();
-                process.execute();
+                process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         lvNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int postion,long arg3) {
                 String clickId = newsListAdapter.newsDigestArrayList.get(postion).getId();
+                newsListAdapter.newsDigestArrayList.get(postion).setHasRead(true);
                 Intent intent = new Intent(arg0.getContext(), NewsDetailActivity.class);
                 intent.putExtra("ID", clickId);
                 startActivity(intent);
@@ -231,12 +248,19 @@ public class PageFragment extends BaseFragment implements DefineView {
                         if(isEn) base = 4;
                         newsDigest.setTitle((_title.substring(0, min(30*base, _title.length()))));
                         newsDigest.setTime((String) JO2.get("time"));
-                        String _source = (String) JO2.get("source");
+                        String _source = JO2.optString("source");
                         if(_source.equals("null"))
                             newsDigest.setSource("");
                         else newsDigest.setSource(_source);
                         String _content = (String) JO2.get("content");
                         newsDigest.setDigest((_content).substring(0, min(60*base, _content.length())));
+
+                        List<NewsHistory> his = newsHistoryDao.getNewsWithId(newsDigest.getId());
+                        if(his.size() != 0)
+                        {
+                            newsDigest.setHasRead(true);
+                        }
+
                         if(!newsListAdapter.IdHashSet.contains(newsDigest.getId()))
                         {
                             hasNewNews = true;
