@@ -16,7 +16,7 @@
         app:tabSelectedTextColor="@color/white"
         app:tabIndicatorHeight="3dp"
         app:tabTextColor="@color/white"/>
-    <com.example.bighomework.view.CustomScrollView
+    <com.java.yangzhuoyi.view.CustomScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -71,7 +71,7 @@
     </LinearLayout>
 
 
-    </com.example.bighomework.view.CustomScrollView>
+    </com.java.yangzhuoyi.view.CustomScrollView>
 
     <TextView
         android:layout_width="wrap_content"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.bighomework">
+    package="com.java.yangzhuoyi">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -17,27 +17,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FavorActivity"
+        <activity android:name="com.java.yangzhuoyi.FavorActivity"
             android:theme="@style/FullScreenTheme"></activity>
         <activity
-            android:name=".NewsDetailOfflineActivity"
+            android:name="com.java.yangzhuoyi.NewsDetailOfflineActivity"
             android:theme="@style/FullScreenTheme" />
         <activity
-            android:name=".HistoryActivity"
+            android:name="com.java.yangzhuoyi.HistoryActivity"
             android:theme="@style/FullScreenTheme" />
         <activity
-            android:name=".NewsSearchActivity"
+            android:name="com.java.yangzhuoyi.NewsSearchActivity"
             android:theme="@style/FullScreenTheme" />
         <activity
-            android:name=".NewsDetailActivity"
-            android:theme="@style/FullScreenTheme" />
-
-        <activity
-            android:name=".ExpertActivity"
+            android:name="com.java.yangzhuoyi.NewsDetailActivity"
             android:theme="@style/FullScreenTheme" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.java.yangzhuoyi.ExpertActivity"
+            android:theme="@style/FullScreenTheme" />
+
+        <activity
+            android:name="com.java.yangzhuoyi.MainActivity"
             android:theme="@style/FullScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TabGridViewActivity"
+            android:name="com.java.yangzhuoyi.TabGridViewActivity"
             android:theme="@style/FullScreenTheme" />
     </application>
 
