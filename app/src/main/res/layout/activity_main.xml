@@ -33,9 +33,10 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1">
             <RadioButton
                 android:id="@+id/rb_news"
                 android:layout_marginRight="@dimen/bth_margin2"
@@ -58,9 +59,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1">
             <RadioButton
                 android:id="@+id/rb_data"
                 android:layout_marginRight="@dimen/bth_margin2"
@@ -82,9 +84,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1">
             <RadioButton
                 android:id="@+id/rb_cate"
 
@@ -107,9 +110,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1">
             <RadioButton
                 android:id="@+id/rb_doctor"
                 android:layout_width="@dimen/btn_size"
@@ -131,9 +135,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1">
             <RadioButton
                 android:id="@+id/rb_relation"
                 android:layout_width="@dimen/btn_size"

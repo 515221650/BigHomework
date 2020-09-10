@@ -118,6 +118,10 @@ public class NewsDetailActivity extends AppCompatActivity {
                     weiboMessage.textObject = getTextObj();
                     wbShareHandler.shareMessage(weiboMessage, false);
                 }
+                else
+                {
+                    Toast.makeText(NewsDetailActivity.this,"尚未开通，努力申请中",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -172,6 +176,8 @@ public class NewsDetailActivity extends AppCompatActivity {
                 URL url = new URL("https://covid-dashboard-api.aminer.cn/event/"+newsId);
                 try {
                     HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setConnectTimeout(5000);
+                    httpURLConnection.setReadTimeout(20000);
                     InputStream inputStream = httpURLConnection.getInputStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                     String line = "";

@@ -132,7 +132,10 @@ public class DataFragment extends BaseFragment implements DefineView {
                 StringBuilder data = new StringBuilder();
                 try {
                     HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setConnectTimeout(5000);
+                    httpURLConnection.setReadTimeout(20000);
                     InputStream inputStream = httpURLConnection.getInputStream();
+
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                     String line = "";
                     while (line != null) {
