@@ -334,9 +334,9 @@ public class DataFragment extends BaseFragment implements DefineView {
         int[] colors = new int[8];
         colors[0] = ContextCompat.getColor(getContext(), R.color.deepred);
         colors[7] = ContextCompat.getColor(getContext(), R.color.orange);
-        colors[4] = colors[3] = ContextCompat.getColor(getContext(), R.color.orangered);
+        colors[3] = ContextCompat.getColor(getContext(), R.color.orangered);
         colors[1] = colors[2] = ContextCompat.getColor(getContext(), R.color.red);
-        colors[5] = colors[6] = ContextCompat.getColor(getContext(), R.color.orange);
+        colors[4] = colors[5] = colors[6] = ContextCompat.getColor(getContext(), R.color.orange);
 
         set.setColors(colors);
         set.setValueTextSize(10);
