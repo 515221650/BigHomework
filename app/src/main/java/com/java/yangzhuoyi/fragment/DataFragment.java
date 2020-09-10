@@ -321,7 +321,7 @@ public class DataFragment extends BaseFragment implements DefineView {
             }
         });
         BarDataSet barDataSet1 = new BarDataSet(entries, "data");
-        barDataSet1.setColor(R.color.tabBack);
+//        barDataSet1.setColor(R.color.tabBack);
         barDataSet1.setValueTextColor(R.color.black);
 
         // yAxis
