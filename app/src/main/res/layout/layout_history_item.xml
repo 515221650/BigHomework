@@ -6,7 +6,8 @@
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
     android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:paddingBottom="10dp"
+    android:background="@color/halfTransparent">
 
     <TextView
         android:id="@+id/tv_newshis_title"
@@ -29,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:textColor="@color/gray"
+            android:textColor="@color/garyDark"
             android:text="2020-9-5 14:00 CST"
             />
         <TextView

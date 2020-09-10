@@ -3,6 +3,8 @@ package com.java.yangzhuoyi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +20,14 @@ public class ExpertActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_expert_detail);
+        Button buttonBack = findViewById(R.id.btn_news_back);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("yyds",this.toString());
+                finish();
+            }
+        });
 
         Intent intent = getIntent();
         Expert expert = (Expert) intent.getSerializableExtra("expert");
@@ -37,5 +47,7 @@ public class ExpertActivity extends AppCompatActivity {
         ali.setText(expert.affiliation);
         ImageView avatar = findViewById(R.id.avatar);
         Glide.with(this).load(expert.avatar).into(avatar);
+
+
     }
 }

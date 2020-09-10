@@ -1,6 +1,7 @@
 package com.java.yangzhuoyi.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class EventAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
+        Log.d("Adapter count", "is "+eventList.size());
         return eventList.size();
     }
 
@@ -45,7 +47,9 @@ public class EventAdapter extends BaseAdapter{
     static class ViewHolder{
         public TextView hot1,hot2,hot3;
         public TextView keyword1,keyword2,keyword3;
-        public TextView title1,title2,title3;
+        public TextView title1;
+        public TextView tv_rank;
+//        public TextView title2,title3;
     }
 
     @Override
@@ -62,8 +66,9 @@ public class EventAdapter extends BaseAdapter{
             holder.keyword2 = view.findViewById(R.id.keyword2);
             holder.keyword3 = view.findViewById(R.id.keyword3);
             holder.title1 = view.findViewById(R.id.title1);
-            holder.title2 = view.findViewById(R.id.title2);
-            holder.title3 = view.findViewById(R.id.title3);
+            holder.tv_rank = view.findViewById(R.id.tv_rank);
+//            holder.title2 = view.findViewById(R.id.title2);
+//            holder.title3 = view.findViewById(R.id.title3);
             view.setTag(holder);
         }
         else
@@ -77,9 +82,15 @@ public class EventAdapter extends BaseAdapter{
         holder.hot1.setText(event.hotnumber[0]);
         holder.hot2.setText(event.hotnumber[1]);
         holder.hot3.setText(event.hotnumber[2]);
-        holder.title1.setText(event.events.get(0).getTitle());
-        holder.title2.setText(event.events.get(1).getTitle());
-        holder.title3.setText(event.events.get(2).getTitle());
-        return null;
+        holder.title1.setText("共计 "+event.events.size() + " 条");
+        holder.tv_rank.setText(Integer.toString(i+1));
+//        holder.title2.setText("");
+//        holder.title3.setText("");
+//        holder.title2.setText(event.events.get(1).getTitle());
+//        holder.title3.setText(event.events.get(2).getTitle());
+//        holder.title1.setText(event.events.get(0).getTitle());
+//        holder.title2.setText(event.events.get(1).getTitle());
+//        holder.title3.setText(event.events.get(2).getTitle());
+        return view;
     }
 }

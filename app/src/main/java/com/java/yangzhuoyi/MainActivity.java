@@ -50,9 +50,6 @@ public class MainActivity extends AppCompatActivity implements DefineView {
     private NewsSearchItemDao newsSearchItemDao;
     private NewsSearchItemDatabase newsSearchItemDatabase;
 
-    FloatingActionButton fab, fabHis, fabFavor;
-    Animation fabOpen, fabClose, rotateForward, rotateBackward;
-    boolean isOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +60,8 @@ public class MainActivity extends AppCompatActivity implements DefineView {
         initListener();
         binData();
 
-        FetchAllNews process = new FetchAllNews();
-        process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//        FetchAllNews process = new FetchAllNews();
+//        process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -72,13 +69,6 @@ public class MainActivity extends AppCompatActivity implements DefineView {
     public void initView() {
         radioGroup = (XRadioGroup)findViewById(R.id.main_rg);
 
-        fab = findViewById(R.id.fab_more);
-        fabFavor = findViewById(R.id.fab_fav);
-        fabHis = findViewById(R.id.fab_his);
-        fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open);
-        fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close);
-        rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward);
-        rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward);
 
         mainInfoFragment = new MainInfoFragment();
         dataFragment = new DataFragment();
@@ -147,26 +137,7 @@ public class MainActivity extends AppCompatActivity implements DefineView {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                animateFab();
-            }
-        });
-        fabHis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
-                startActivity(intent);
-            }
-        });
-        fabFavor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, FavorActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
     }
 
@@ -224,25 +195,5 @@ public class MainActivity extends AppCompatActivity implements DefineView {
         }
     }
 
-    private void animateFab()
-    {
-        if(isOpen)
-        {
-            fab.startAnimation(rotateBackward);
-            fabFavor.startAnimation(fabClose);
-            fabHis.startAnimation(fabClose);
-            fabHis.setClickable(false);
-            fabFavor.setClickable(false);
-            isOpen = false;
-        }
-        else
-        {
-            fab.startAnimation(rotateForward);
-            fabFavor.startAnimation(fabOpen);
-            fabHis.startAnimation(fabOpen);
-            fabHis.setClickable(true);
-            fabFavor.setClickable(true);
-            isOpen = true;
-        }
-    }
+
 }
