@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.java.yangzhuoyi.database.NewsFavor;
 import com.java.yangzhuoyi.database.NewsFavorDao;
@@ -18,6 +20,17 @@ import com.java.yangzhuoyi.database.NewsHistory;
 import com.java.yangzhuoyi.database.NewsHistoryDao;
 import com.java.yangzhuoyi.database.NewsHistoryDatabase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.java.yangzhuoyi.dialog.ShareDialog;
+import com.java.yangzhuoyi.util.WebConstants;
+import com.sina.weibo.sdk.WbSdk;
+import com.sina.weibo.sdk.api.TextObject;
+import com.sina.weibo.sdk.api.WeiboMultiMessage;
+import com.sina.weibo.sdk.auth.AccessTokenKeeper;
+import com.sina.weibo.sdk.auth.AuthInfo;
+import com.sina.weibo.sdk.auth.Oauth2AccessToken;
+import com.sina.weibo.sdk.auth.WbAuthListener;
+import com.sina.weibo.sdk.auth.WbConnectErrorMessage;
+import com.sina.weibo.sdk.share.WbShareHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,11 +52,17 @@ public class NewsDetailActivity extends AppCompatActivity {
     String newsContent = "";
 
     TextView tvTitle, tvContent, tvSource, tvTime;
+    ShareDialog shareDialog;
+
+    Oauth2AccessToken mAccessToken;
 
     private NewsHistoryDatabase newsHistoryDatabase;
     private NewsHistoryDao newsHistoryDao;
     private NewsFavorDatabase newsFavorDatabase;
     private NewsFavorDao newsFavorDao;
+
+    private int weiboShareType =1;
+    WbShareHandler wbShareHandler;
 
     FloatingActionButton fab, fabShare, fabFavor;
     Animation fabOpen, fabClose, rotateForward, rotateBackward;
@@ -82,9 +101,68 @@ public class NewsDetailActivity extends AppCompatActivity {
         fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close);
         rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward);
         rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward);
+
+        AuthInfo mAuthInfo = new AuthInfo(this, WebConstants.APP_KEY, WebConstants.REDIRECT_URL, WebConstants.SCOPE);
+        WbSdk.install(this, mAuthInfo);
+
+        wbShareHandler = new WbShareHandler(this);
+        wbShareHandler.registerApp();
+        wbShareHandler.setProgressColor(0xff33b5e5);
+
+        shareDialog = new ShareDialog(this, null, new ShareDialog.PriorityListener() {
+            @Override
+            public void getSource(String string) {
+                if(string.equals("weibo"))
+                {
+                    WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
+                    weiboMessage.textObject = getTextObj();
+                    wbShareHandler.shareMessage(weiboMessage, false);
+                }
+            }
+        });
     }
 
 
+    private String getSharedText() {
+        String text = "【来自"+newsSource+"的消息："+newsTitle+"】"+"\n"+newsContent;
+        if(text.length()>=140)
+            text.substring(0, 139);
+        return text;
+    }
+
+    private TextObject getTextObj() {
+        TextObject textObject = new TextObject();
+        textObject.text = getSharedText();
+        textObject.title = newsTitle;
+        textObject.actionUrl = "http://www.baidu.com";
+        return textObject;
+    }
+
+    class selfAuthorListener implements WbAuthListener {
+        @Override
+        public void onSuccess(final Oauth2AccessToken token) {
+            NewsDetailActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
+                    weiboMessage.textObject = getTextObj();
+                    wbShareHandler.shareMessage(weiboMessage, weiboShareType==1);
+                }
+            });
+        }
+
+        @Override
+        public void cancel() {
+            Toast.makeText(NewsDetailActivity.this,
+                    "canceled", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onFailure(WbConnectErrorMessage errorMessage) {
+            Toast.makeText(NewsDetailActivity.this, errorMessage.getErrorMessage(), Toast.LENGTH_LONG).show();
+        }
+
+    }
     private class FetchContent extends AsyncTask<Void, Void, Void>
     {
         @Override
@@ -140,6 +218,16 @@ public class NewsDetailActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     StoreFavor process = new StoreFavor();
                     process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            });
+            fabShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(shareDialog.isShowing()){
+                        shareDialog.dismiss();
+                    }else {
+                        shareDialog.show();
+                    }
                 }
             });
         }

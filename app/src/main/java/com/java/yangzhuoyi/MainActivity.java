@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity implements DefineView {
         initListener();
         binData();
 
-        FetchAllNews process = new FetchAllNews();
-        process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//        FetchAllNews process = new FetchAllNews();
+//        process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -81,22 +81,22 @@ public class MainActivity extends AppCompatActivity implements DefineView {
         rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward);
 
         mainInfoFragment = new MainInfoFragment();
-        dataFragment = new DataFragment();
+//        dataFragment = new DataFragment();
         expertFragment = new ExpertFragment();
         knowledgeGraphFragment = new KnowledgeGraphFragment();
-        eventFragment = new EventFragment();
+//        eventFragment = new EventFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        transaction.add(R.id.fragment_container, eventFragment);
+//        transaction.add(R.id.fragment_container, eventFragment);
         transaction.add(R.id.fragment_container, knowledgeGraphFragment);
-        transaction.add(R.id.fragment_container, dataFragment);
+//        transaction.add(R.id.fragment_container, dataFragment);
         transaction.add(R.id.fragment_container, expertFragment);
         transaction.add(R.id.fragment_container, mainInfoFragment);
 
-        transaction.hide(eventFragment);
+//        transaction.hide(eventFragment);
         transaction.hide(expertFragment);
-        transaction.hide(dataFragment);
+//        transaction.hide(dataFragment);
         transaction.hide(knowledgeGraphFragment);
 
 

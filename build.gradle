@@ -15,6 +15,7 @@ buildscript {
 
 }
 
+
 allprojects {
     repositories {
         google()
@@ -22,9 +23,12 @@ allprojects {
         maven {
             url "https://jitpack.io"
         }
+        mavenCentral()
+        maven { url "https://dl.bintray.com/thelasterstar/maven/" }
     }
 }
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
