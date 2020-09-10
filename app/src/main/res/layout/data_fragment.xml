@@ -16,6 +16,12 @@
         app:tabSelectedTextColor="@color/white"
         app:tabIndicatorHeight="3dp"
         app:tabTextColor="@color/white"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/divider_blue" />
+
     <com.java.yangzhuoyi.view.CustomScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -27,7 +33,19 @@
         <LinearLayout
             android:id="@+id/ll_bar_char"
             android:layout_width="match_parent"
-            android:layout_height="400dp">
+            android:layout_height="400dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="世界疫情最严重的国家确诊数量统计图"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:paddingTop="15dp"
+                android:paddingBottom="10dp"/>
+
+
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/bar_cart"
                 android:contentDescription="确诊数量"
@@ -39,12 +57,15 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/divider"/>
+            android:layout_marginTop="5dp"
+            android:background="@drawable/divider_gray"
+            android:layout_marginBottom="5dp"/>
         <LinearLayout
             android:id="@+id/ll_table_out"
             android:layout_width="match_parent"
             android:layout_height="1000dp"
             android:layout_marginBottom="@dimen/data_bottom">
+
             <com.bin.david.form.core.SmartTable
                 android:id="@+id/table_out"
                 android:layout_width="match_parent"
@@ -55,7 +76,9 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/divider"/>
+            android:layout_marginTop="5dp"
+            android:background="@drawable/divider_gray"
+            android:layout_marginBottom="5dp"/>
         <LinearLayout
             android:id="@+id/ll_table_in"
             android:layout_width="match_parent"
