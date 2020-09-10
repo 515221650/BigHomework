@@ -2,6 +2,7 @@ package com.java.yangzhuoyi.fragment;
 
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -330,14 +331,14 @@ public class DataFragment extends BaseFragment implements DefineView {
 //        barDataSet1.setValueTextColor(R.color.black);
 
         MyBarDataSet set = new MyBarDataSet(entries, "data");
-        set.setColors(new int[]{ContextCompat.getColor(getContext(), R.color.chart_red),
-                ContextCompat.getColor(getContext(), R.color.chart_red),
-                ContextCompat.getColor(getContext(), R.color.chart_red),
-                ContextCompat.getColor(getContext(), R.color.chart_red),
-                ContextCompat.getColor(getContext(), R.color.chart_red),
-                ContextCompat.getColor(getContext(), R.color.chart_red),
-                ContextCompat.getColor(getContext(), R.color.chart_red),
-                ContextCompat.getColor(getContext(), R.color.chart_red)});
+        int[] colors = new int[8];
+        colors[0] = ContextCompat.getColor(getContext(), R.color.deepred);
+        colors[7] = ContextCompat.getColor(getContext(), R.color.orange);
+        colors[4] = colors[3] = ContextCompat.getColor(getContext(), R.color.orangered);
+        colors[1] = colors[2] = ContextCompat.getColor(getContext(), R.color.red);
+        colors[5] = colors[6] = ContextCompat.getColor(getContext(), R.color.orange);
+
+        set.setColors(colors);
         set.setValueTextSize(10);
 
 

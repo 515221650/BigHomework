@@ -8,6 +8,9 @@
     <color name="tabBack_for_table">#ff1da8fe</color>
     <color name="black">#000000</color>
     <color name="orange">#FFA500</color>
+    <color name="orangered">#FF4500</color>
+    <color name="red">#FF0000</color>
+    <color name="deepred">#8B0000</color>
     <color name="gray">#D5D5D5</color>
     <color name="garyDark">#808080</color>
     <color name="lightBlue">#B0DCF9</color>
