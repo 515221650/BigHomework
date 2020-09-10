@@ -14,5 +14,5 @@ public class Event implements Serializable {
     }
     public List<NewsDigest> events;
     public String[] keywords = new String[3];
-    public int[] hotnumber = new int[3];
+    public String[] hotnumber = new String[3];
 }

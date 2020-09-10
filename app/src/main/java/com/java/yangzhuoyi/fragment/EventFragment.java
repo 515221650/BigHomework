@@ -33,12 +33,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.security.spec.ECField;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -127,17 +129,19 @@ public class EventFragment extends BaseFragment implements DefineView {
         HashMap<String, Integer> segsHashMap = new HashMap<>();
         List<ArrayList<Double>> centerWordBag = new ArrayList<>(SIZE);
         ArrayList<ArrayList<RcvEvent>> FinalEventCluster;
+        HashSet<String> StopWords = new HashSet<>();
 
         int NewsNum;
 
         @Override
         protected Void doInBackground(Void... voids) {
+            StopWords.add("表明"); StopWords.add("表示");
             URL url = null;
             try {
                 url = new URL("https://covid-dashboard.aminer.cn/api/events/list?type=event&page=1&size=1000");
                 StringBuilder data = new StringBuilder();
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setConnectTimeout(20000);
+                httpURLConnection.setConnectTimeout(10000);
                 httpURLConnection.setReadTimeout(20000);
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -149,6 +153,7 @@ public class EventFragment extends BaseFragment implements DefineView {
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
+                Log.d("get event", "ok");
 
                 JSONObject JO = new JSONObject(data.toString());
                 JSONArray JA2 = (JSONArray) JO.get("data");
@@ -165,6 +170,8 @@ public class EventFragment extends BaseFragment implements DefineView {
                     event.segs.addAll(Arrays.asList(event.seg_title.split("\\s+")));
                     rcvEvents.add(event);
                 }
+                Log.d("event ", "finish");
+
             }
             catch (SocketTimeoutException e){
                 e.printStackTrace();
@@ -183,9 +190,12 @@ public class EventFragment extends BaseFragment implements DefineView {
                 for(int j=0; j<segsLen; j++)
                 {
                     String tmp = rcvEvents.get(i).segs.get(j);
-                    Integer v = segsHashMap.get(tmp);
-                    if(v == null) v = 0;
-                    segsHashMap.put(tmp, v+1);
+                    if(tmp.length() > 1 && !StopWords.contains(tmp))
+                    {
+                        Integer v = segsHashMap.get(tmp);
+                        if(v == null) v = 0;
+                        segsHashMap.put(tmp, v+1);
+                    }
                 }
             }
 
@@ -238,6 +248,8 @@ public class EventFragment extends BaseFragment implements DefineView {
                     else rcvEvents.get(i).wordBag.add(0.0);
                 }
             }
+            Log.d("event ", "start k-means");
+
 
             // Start K-means
             Collections.shuffle(rcvEvents);
@@ -245,11 +257,13 @@ public class EventFragment extends BaseFragment implements DefineView {
             for(int i=0; i<SIZE; i++)
                 centerWordBag.add(rcvEvents.get(i).wordBag);
 
-            act_cluster(300);
+            act_cluster(100);
+            Log.d("event ", "finish k-means");
 
             for(int k=0; k<SIZE; k++)
             {
                 ArrayList<RcvEvent> cluster = FinalEventCluster.get(k);
+                Log.d("event ", "now cluster size "+cluster.size());
                 if (cluster.size() > 100 || cluster.size() < 5) continue;
                 ArrayList<Double> wordBagSum = new ArrayList<>();
                 int clusterSize = cluster.size();
@@ -275,10 +289,11 @@ public class EventFragment extends BaseFragment implements DefineView {
                 });
 
                 Event clusterEvent = new Event();
+                clusterEvent.events = new ArrayList<>();
                 for(int pp=0; pp<3; pp++)
                 {
                     clusterEvent.keywords[pp] = topTags.get(pp).getKey();
-                    clusterEvent.hotnumber[pp] = topTags.get(pp).getValue().intValue();
+                    clusterEvent.hotnumber[pp] = Integer.toString(topTags.get(pp).getValue().intValue());
                 }
                 int eventClusterSize = cluster.size();
                 for(int pp=0; pp<eventClusterSize; pp++)
@@ -291,6 +306,14 @@ public class EventFragment extends BaseFragment implements DefineView {
                 }
 //                Log.d("1","2333"+" "+eventClusterSize);
                 eventSourceList.add(clusterEvent);
+            }
+            Log.d("event ", "finish main work");
+            int lennn = eventSourceList.size();
+            Log.d("event ", "num "+lennn);
+            for(int i=0; i<lennn; i++)
+            {
+                Log.d("event ", "No. "+ i + " size: "+eventSourceList.get(i).events.size()+" hot word:"+eventSourceList.get(i).keywords[0]
+                + " " + eventSourceList.get(i).keywords[1] + " " + eventSourceList.get(i).keywords[2]);
             }
             return null;
         }
@@ -306,7 +329,7 @@ public class EventFragment extends BaseFragment implements DefineView {
 
         double getDist(RcvEvent e1, ArrayList<Double> e2)
         {
-            int dist = 0;
+            double dist = 0;
             for(int i=0; i<300; i++)
             {
                 double tmp = e1.wordBag.get(i) - e2.get(i);
@@ -320,9 +343,18 @@ public class EventFragment extends BaseFragment implements DefineView {
             for(int t=0; t<times; t++)
             {
                 Collections.shuffle(centerWordBag);
-                ArrayList<ArrayList<RcvEvent>> eventCluster = new ArrayList<>();
+                FinalEventCluster = new ArrayList<>();
                 for(int i=0; i<SIZE; i++)
-                    eventCluster.add(new ArrayList<RcvEvent>());
+                    FinalEventCluster.add(new ArrayList<RcvEvent>());
+                if(t == 1)
+                {
+                    String out = new String("");
+                    for(int pp=0; pp<300; pp++)
+                    {
+                        out += " " + centerWordBag.get(0).get(pp);
+                    }
+                    Log.d("center wordbag 0", out);
+                }
                 for(RcvEvent event: rcvEvents)
                 {
                     double mindist = 10000;
@@ -330,22 +362,27 @@ public class EventFragment extends BaseFragment implements DefineView {
                     for(int i=0; i<SIZE; i++)
                     {
                         double tmpdist = getDist(event, centerWordBag.get(i));
+//                        if(t == 1)
+//                        {
+//                            Log.d("evnet", "tmpdist [" + i +"] "+tmpdist);
+//                        }
                         if(tmpdist < mindist)
                         {
                             mindist = tmpdist;
                             minIndex = i;
                         }
+
                     }
-                    eventCluster.get(minIndex).add(event);
+//                    if(t == 1)
+//                    {
+//                        Log.d("event ", "choose cluster "+ minIndex);
+//                    }
+                    FinalEventCluster.get(minIndex).add(event);
                 }
                 centerWordBag.clear();
                 for(int i=0; i<SIZE; i++)
                 {
-                    centerWordBag.add(getCenter(eventCluster.get(i)));
-                }
-                if(t == times-1)
-                {
-                    FinalEventCluster = eventCluster;
+                    centerWordBag.add(getCenter(FinalEventCluster.get(i)));
                 }
             }
         }
@@ -354,6 +391,10 @@ public class EventFragment extends BaseFragment implements DefineView {
         {
             int listsize = list.size();
             ArrayList<Double> res = new ArrayList<>();
+            if(listsize < 5)
+            {
+                res = rcvEvents.get((int) (Math.random() * NewsNum)).wordBag;
+            }
             for(int i=0; i<300; i++)
             {
                 double tmp = 0;
