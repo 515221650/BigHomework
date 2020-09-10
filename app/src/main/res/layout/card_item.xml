@@ -6,131 +6,182 @@
     android:layout_height="match_parent">
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        app:cardBackgroundColor="@color/gray"
-        app:cardElevation="20dp"
+        app:cardElevation="5dp"
         app:cardMaxElevation="10dp"
-        app:contentPaddingLeft="10dp"
-        app:contentPaddingTop="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center_horizontal"
         >
         <LinearLayout
+            android:background="@mipmap/card_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:dividerPadding="20dp">
-            <LinearLayout
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_rank"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/keyword1"
+                android:layout_height="match_parent"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:text="2"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="15dp"
+                android:background="@drawable/gradient_shape_darkblue"
+                android:textColor="@color/white"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerPadding="20dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/keyword_tab"
-                    android:text="hello"
-                    android:gravity="center"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
-                    android:layout_marginBottom="@dimen/keyword_bottom"
-                    />
-                <ImageView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="@dimen/hot_width"
-                    android:layout_height="@dimen/hot_width"
-                    android:layout_gravity="center"
-                    android:background="@mipmap/hot"/>
-                <TextView
-                    android:id="@+id/hotnumber1"
+                    >
+
+                    <TextView
+                        android:id="@+id/keyword1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/keyword_bottom"
+                        android:background="@drawable/keyword_tab"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="3dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="3dp"
+                        android:textSize="15sp"
+                        android:text="hello" />
+
+                    <ImageView
+                        android:layout_width="@dimen/hot_width"
+                        android:layout_height="@dimen/hot_width"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/hot" />
+
+                    <TextView
+                        android:id="@+id/hotnumber1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="33dp"
+                        android:gravity="center"
+                        android:text="123123"
+                        android:textColor="@color/garyDark"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/keyword2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/keyword_bottom"
+                        android:background="@drawable/keyword_tab"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:textSize="15sp"
+                        android:paddingTop="3dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="3dp"
+                        android:text="hello" />
+
+                    <ImageView
+                        android:layout_width="@dimen/hot_width"
+                        android:layout_height="@dimen/hot_width"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/hot" />
+
+                    <TextView
+                        android:id="@+id/hotnumber2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="15sp"
+                        android:text="123123"
+                        android:textColor="@color/garyDark" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/keyword3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/keyword_tab"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="3dp"
+                        android:paddingRight="5dp"
+                        android:textSize="15sp"
+                        android:paddingBottom="3dp"
+                        android:text="hello" />
+
+                    <ImageView
+                        android:layout_width="@dimen/hot_width"
+                        android:layout_height="@dimen/hot_width"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/hot" />
+
+                    <TextView
+                        android:id="@+id/hotnumber3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="123123"
+                        android:textSize="15sp"
+                        android:textColor="@color/garyDark" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="123123"
-                    android:textColor="@color/garyDark"/>
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/title1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="title1" />
+                    <!--            <TextView-->
+                    <!--                android:id="@+id/title2"-->
+                    <!--                android:layout_width="wrap_content"-->
+                    <!--                android:layout_height="wrap_content"-->
+                    <!--                android:text="title2"/>-->
+                    <!--            <TextView-->
+                    <!--                android:id="@+id/title3"-->
+                    <!--                android:layout_width="wrap_content"-->
+                    <!--                android:layout_height="wrap_content"-->
+                    <!--                android:text="title3"/>-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:layout_marginRight="10dp"
+                        android:text="点击查看" />
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/keyword2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/keyword_tab"
-                    android:text="hello"
-                    android:gravity="center"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
-                    android:layout_marginBottom="@dimen/keyword_bottom"
-                    />
-                <ImageView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="@dimen/hot_width"
-                    android:layout_height="@dimen/hot_width"
-                    android:layout_gravity="center"
-                    android:background="@mipmap/hot"/>
-                <TextView
-                    android:id="@+id/hotnumber2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="123123"
-                    android:textColor="@color/garyDark"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/keyword3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/keyword_tab"
-                    android:text="hello"
-                    android:gravity="center"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
-                    />
-                <ImageView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="@dimen/hot_width"
-                    android:layout_height="@dimen/hot_width"
-                    android:layout_gravity="center"
-                    android:background="@mipmap/hot"/>
-                <TextView
-                    android:id="@+id/hotnumber3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="123123"
-                    android:textColor="@color/garyDark"/>
-            </LinearLayout>
-            <TextView
-                android:id="@+id/title1"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:text="title1"/>
-            <TextView
-                android:id="@+id/title2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="title2"/>
-            <TextView
-                android:id="@+id/title3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="title3"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="点击查看更多"/>
         </LinearLayout>
+
+
 
     </androidx.cardview.widget.CardView>
 </LinearLayout>

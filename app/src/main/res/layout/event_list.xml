@@ -1,90 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/background"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/news_detail_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/tabBack"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_news_back"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.7"
+            android:background="@drawable/ic_back_24" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorHeight="3dp"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/white" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/abstract_image_blue"
+        android:orientation="vertical">
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp">
+        android:paddingTop="10dp">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tooltipText="nizainali"
-            app:cardBackgroundColor="@color/transparent"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="15dp"
-            android:layout_gravity="center"
+            android:layout_gravity="left"
             android:layout_marginTop="10dp"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp">
+            android:paddingBottom="5dp"
+            android:tooltipText="nizainali"
+            app:cardBackgroundColor="@color/lightBlue"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="15dp"
+            android:layout_marginLeft="20dp"
+            >
+
             <TextView
                 android:id="@+id/key1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp"
                 android:text="keyword1"
-                android:layout_gravity="center"
-                android:textColor="@color/orange"
-                android:textSize="24sp" />
+                android:textColor="@color/garyDark"
+                android:textSize="20sp" />
 
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tooltipText="nizainali"
-            app:cardBackgroundColor="@color/transparent"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="15dp"
-            android:layout_gravity="center"
-            android:paddingTop="5dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:paddingBottom="5dp">
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:tooltipText="nizainali"
+            app:cardBackgroundColor="@color/lightBlue"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="15dp">
+
             <TextView
                 android:id="@+id/key2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:paddingLeft="10dp"
+
+                android:paddingRight="20dp"
                 android:text="keyword2"
-                android:layout_gravity="center"
-                android:textColor="@color/orange"
-                android:textSize="24sp" />
+                android:textColor="@color/garyDark"
+                android:textSize="20sp" />
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tooltipText="nizainali"
-            app:cardBackgroundColor="@color/transparent"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="15dp"
-            android:layout_gravity="center"
-            android:paddingTop="5dp"
+            android:layout_gravity="right"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:layout_marginBottom="10dp">
+            android:tooltipText="nizainali"
+            app:cardBackgroundColor="@color/lightBlue"
+            app:cardCornerRadius="10dp"
+            android:layout_marginRight="20dp"
+            app:cardElevation="15dp">
+
             <TextView
                 android:id="@+id/key3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
+                android:layout_gravity="left"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp"
                 android:text="keyword1"
-                android:layout_gravity="center"
-                android:textColor="@color/orange"
-                android:textSize="24sp" />
+                android:textColor="@color/garyDark"
+                android:textSize="20sp" />
 
         </androidx.cardview.widget.CardView>
-    </LinearLayout>
+    </FrameLayout>
+
     <ListView
         android:id="@+id/event_list2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"></ListView>
+    </LinearLayout>
 </LinearLayout>

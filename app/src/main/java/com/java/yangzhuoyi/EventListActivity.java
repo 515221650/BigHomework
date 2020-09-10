@@ -2,6 +2,9 @@ package com.java.yangzhuoyi;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +39,14 @@ public class EventListActivity extends AppCompatActivity implements DefineView {
         key2 = findViewById(R.id.key2);
         key3 = findViewById(R.id.key3);
         listView = findViewById(R.id.event_list2);
+        Button buttonBack = findViewById(R.id.btn_news_back);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("yyds",this.toString());
+                finish();
+            }
+        });
     }
 
     @Override
@@ -43,6 +54,9 @@ public class EventListActivity extends AppCompatActivity implements DefineView {
         Intent intent = getIntent();
         eventAdapter = new EventListAdapter(this, Event.getInstance().events);
         listView.setAdapter(eventAdapter);
+        key1.setText("# " +  Event.getInstance().keywords[0]);
+        key2.setText("# " +  Event.getInstance().keywords[1]);
+        key3.setText("# " +  Event.getInstance().keywords[2]);
     }
 
     @Override

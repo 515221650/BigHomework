@@ -16,6 +16,6 @@
     <dimen name="data_bottom">100dp</dimen>
     <dimen name="number_size">11sp</dimen>
     <dimen name="content_size">17sp</dimen>
-    <dimen name="hot_width">15dp</dimen>
+    <dimen name="hot_width">18dp</dimen>
     <dimen name="keyword_bottom">5dp</dimen>
 </resources>

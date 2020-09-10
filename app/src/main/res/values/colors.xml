@@ -11,11 +11,14 @@
     <color name="gray">#D5D5D5</color>
     <color name="garyDark">#808080</color>
     <color name="lightBlue">#B0DCF9</color>
+    <color name="lightLightBlue">#D2E9FF</color>
     <color name="darkBlue">#134EA9</color>
+    <color name="blue2">#0080FF</color>
     <color name="index_h">#bcc8ae</color>
     <color name="index_a">#c7bda1</color>
     <color name="index_s">#98bec7</color>
     <color name="index_c">#adbbdc</color>
     <color name="index_p">#a7c1bf</color>
     <color name="transparent">#00000000</color>
+    <color name="halfTransparent">#90FFFFFF</color>
 </resources>

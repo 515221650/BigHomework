@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/abstract_image_blue"
     tools:context=".HistoryActivity">
 
 
@@ -25,7 +26,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_weight="1"
-            android:background="@mipmap/back" />
+            android:background="@drawable/ic_back_24" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
