@@ -1,6 +1,8 @@
 package com.java.yangzhuoyi.util;
 
-public class NewsDigest {
+import java.io.Serializable;
+
+public class NewsDigest implements Serializable {
     String title;
     String digest;
     String time;

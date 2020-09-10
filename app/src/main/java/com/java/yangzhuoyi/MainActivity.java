@@ -17,6 +17,7 @@ import com.java.yangzhuoyi.database.NewsSearchItem;
 import com.java.yangzhuoyi.database.NewsSearchItemDao;
 import com.java.yangzhuoyi.database.NewsSearchItemDatabase;
 import com.java.yangzhuoyi.fragment.DataFragment;
+import com.java.yangzhuoyi.fragment.EventFragment;
 import com.java.yangzhuoyi.fragment.ExpertFragment;
 import com.java.yangzhuoyi.fragment.KnowledgeGraphFragment;
 import com.java.yangzhuoyi.fragment.MainInfoFragment;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements DefineView {
     private MainInfoFragment mainInfoFragment;
     private DataFragment dataFragment;
     private ExpertFragment expertFragment;
+    private EventFragment eventFragment;
     private KnowledgeGraphFragment knowledgeGraphFragment;
     private XRadioGroup radioGroup;
     private Fragment currentFragment;
@@ -82,15 +84,17 @@ public class MainActivity extends AppCompatActivity implements DefineView {
         dataFragment = new DataFragment();
         expertFragment = new ExpertFragment();
         knowledgeGraphFragment = new KnowledgeGraphFragment();
+        eventFragment = new EventFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+        transaction.add(R.id.fragment_container, eventFragment);
         transaction.add(R.id.fragment_container, knowledgeGraphFragment);
         transaction.add(R.id.fragment_container, dataFragment);
         transaction.add(R.id.fragment_container, expertFragment);
         transaction.add(R.id.fragment_container, mainInfoFragment);
 
-
+        transaction.hide(eventFragment);
         transaction.hide(expertFragment);
         transaction.hide(dataFragment);
         transaction.hide(knowledgeGraphFragment);
@@ -128,7 +132,8 @@ public class MainActivity extends AppCompatActivity implements DefineView {
                         currentFragment = dataFragment;
                         break;
                     case R.id.rb_cate:
-                        transaction.hide(currentFragment).show(dataFragment).commit();
+                        transaction.hide(currentFragment).show(eventFragment).commit();
+                        currentFragment = eventFragment;
                         break;
                     case R.id.rb_doctor:
                         transaction.hide(currentFragment).show(expertFragment).commit();

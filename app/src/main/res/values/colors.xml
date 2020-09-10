@@ -17,4 +17,5 @@
     <color name="index_s">#98bec7</color>
     <color name="index_c">#adbbdc</color>
     <color name="index_p">#a7c1bf</color>
+    <color name="transparent">#00000000</color>
 </resources>

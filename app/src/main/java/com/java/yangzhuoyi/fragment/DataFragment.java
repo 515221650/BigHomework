@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import com.bin.david.form.core.SmartTable;
@@ -114,7 +115,7 @@ public class DataFragment extends BaseFragment implements DefineView {
         anchorList.add(mView.findViewById(R.id.ll_table_out));
         anchorList.add(mView.findViewById(R.id.ll_table_in));
 
-        tabLayout = (TabLayout)mView.findViewById(R.id.data_tab_layout);
+        tabLayout =  mView.findViewById(R.id.data_tab_layout);
         scrollView = (CustomScrollView)mView.findViewById(R.id.scrollView);
     }
 
