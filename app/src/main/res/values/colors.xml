@@ -21,4 +21,14 @@
     <color name="index_p">#a7c1bf</color>
     <color name="transparent">#00000000</color>
     <color name="halfTransparent">#90FFFFFF</color>
+    <color name="chart_red">#B22222</color>
+    <color name="chart_orange">#CD661D</color>
+    <color name="chart_yellow">#CD8500</color>
+    <color name="chart_green1">#64A600</color>
+    <color name="chart_green2">#3CB371</color>
+    <color name="chart_green3">#3CB371</color>
+    <color name="chart_blue1">#0072E3</color>
+    <color name="chart_blue2">#0072E3</color>
+
+
 </resources>

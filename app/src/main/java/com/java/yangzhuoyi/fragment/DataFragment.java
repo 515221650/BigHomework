@@ -29,6 +29,7 @@ import com.bin.david.form.data.format.sequence.ISequenceFormat;
 import com.bin.david.form.data.table.TableData;
 import com.java.yangzhuoyi.R;
 import com.java.yangzhuoyi.common.DefineView;
+import com.java.yangzhuoyi.util.MyBarDataSet;
 import com.java.yangzhuoyi.view.CustomScrollView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
@@ -248,7 +249,7 @@ public class DataFragment extends BaseFragment implements DefineView {
             @Override
             public int getBackGroundColor(Integer position) {
                 if(position%2 == 1){
-                    return ContextCompat.getColor(getActivity(),R.color.tabBack);
+                    return ContextCompat.getColor(getActivity(),R.color.lightBlue);
                 }
                 return TableConfig.INVALID_COLOR;
 
@@ -267,7 +268,7 @@ public class DataFragment extends BaseFragment implements DefineView {
             public void drawBackground(Canvas canvas, Rect rect, CellInfo cellInfo, Paint paint) {
                 if(cellInfo.row%2==0){
                     paint.clearShadowLayer();
-                    paint.setColor(getResources().getColor(R.color.tabBack));
+                    paint.setColor(getResources().getColor(R.color.lightBlue));
                     Log.d("??",paint.getColor()+"");
                     canvas.drawRect(rect,paint);
                 }
@@ -323,9 +324,20 @@ public class DataFragment extends BaseFragment implements DefineView {
                 return map.get(id).position;
             }
         });
-        BarDataSet barDataSet1 = new BarDataSet(entries, "data");
+//        BarDataSet barDataSet1 = new BarDataSet(entries, "data");
 //        barDataSet1.setColor(R.color.tabBack);
-        barDataSet1.setValueTextColor(R.color.black);
+//        barDataSet1.setValueTextColor(R.color.black);
+
+        MyBarDataSet set = new MyBarDataSet(entries, "data");
+        set.setColors(new int[]{ContextCompat.getColor(getContext(), R.color.chart_red),
+                ContextCompat.getColor(getContext(), R.color.chart_orange),
+                ContextCompat.getColor(getContext(), R.color.chart_yellow),
+                ContextCompat.getColor(getContext(), R.color.chart_green1),
+                ContextCompat.getColor(getContext(), R.color.chart_green2),
+                ContextCompat.getColor(getContext(), R.color.chart_green3),
+                ContextCompat.getColor(getContext(), R.color.chart_blue1),
+                ContextCompat.getColor(getContext(), R.color.chart_blue2)});
+        set.setValueTextSize(10);
 
         // yAxis
         YAxis axisLeft = barChart.getAxisLeft();
@@ -336,7 +348,7 @@ public class DataFragment extends BaseFragment implements DefineView {
         barChart.getAxisRight().setEnabled(false); // 不启用
 
 
-        BarData lineData = new BarData(barDataSet1);
+        BarData lineData = new BarData(set);
         barChart.setData(lineData);
         barChart.invalidate(); // refresh
 
