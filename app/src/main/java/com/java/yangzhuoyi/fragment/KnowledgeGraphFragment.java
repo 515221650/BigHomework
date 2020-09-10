@@ -42,8 +42,9 @@ public class KnowledgeGraphFragment extends Fragment {
     ImageView ivPic;
     ListView lvProperty, lvRelation;
     SearchView searchView;
+
     public KnowledgePropertyListAdapter knowledgePropertyListAdapter;
-    public KnowledgeItemListAdapter knowledgeItemListAdapter;
+//    public KnowledgeItemListAdapter knowledgeItemListAdapter;
 
     public KnowledgeGraphFragment() {
         // Required empty public constructor
@@ -94,10 +95,10 @@ public class KnowledgeGraphFragment extends Fragment {
         tvIntro = mView.findViewById(R.id.tv_knowledge_intro);
         ivPic = mView.findViewById(R.id.iv_knowledge);
         lvProperty = mView.findViewById(R.id.lv_knowedge_property);
-        lvRelation = mView.findViewById(R.id.lv_knowedge_relation);
+//        lvRelation = mView.findViewById(R.id.lv_knowedge_relation);
 
-        knowledgeItemListAdapter = new KnowledgeItemListAdapter(getActivity());
-        lvRelation.setAdapter(knowledgeItemListAdapter);
+//        knowledgeItemListAdapter = new KnowledgeItemListAdapter(getActivity());
+//        lvRelation.setAdapter(knowledgeItemListAdapter);
         knowledgePropertyListAdapter = new KnowledgePropertyListAdapter(getActivity());
         lvProperty.setAdapter(knowledgePropertyListAdapter);
 
@@ -113,7 +114,8 @@ public class KnowledgeGraphFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
             knowledgePropertyListAdapter.kPropertyList.clear();
-            knowledgeItemListAdapter.kItemList.clear();
+            knowledgePropertyListAdapter.kItemList.clear();
+//            knowledgeItemListAdapter.kItemList.clear();
             try {
                 URL url = new URL("https://innovaapi.aminer.cn/covid/api/v1/pneumonia/entityquery?entity="+queryStr);
                 Log.d("url", "https://innovaapi.aminer.cn/covid/api/v1/pneumonia/entityquery?entity="+queryStr);
@@ -174,7 +176,8 @@ public class KnowledgeGraphFragment extends Fragment {
                             item.relation = JOrelaItem.getString("relation");
                             item.label = JOrelaItem.getString("label");
                             item.forward = JOrelaItem.getBoolean("forward");
-                            knowledgeItemListAdapter.kItemList.add(item);
+                            knowledgePropertyListAdapter.kItemList.add(item);
+//                            knowledgeItemListAdapter.kItemList.add(item);
                         }
 
                     }
@@ -197,9 +200,9 @@ public class KnowledgeGraphFragment extends Fragment {
             tvTitle.setText(titleTXT);
             tvIntro.setText(introTXT);
 
-            setListViewHeightBasedOnChildren(lvRelation);
-            setListViewHeightBasedOnChildren(lvProperty);
-            knowledgeItemListAdapter.notifyDataSetChanged();
+//            setListViewHeightBasedOnChildren(lvRelation);
+//            setListViewHeightBasedOnChildren(lvProperty);
+//            knowledgeItemListAdapter.notifyDataSetChanged();
             knowledgePropertyListAdapter.notifyDataSetChanged();
 
             Log.d("log pic ", imgUrl);
