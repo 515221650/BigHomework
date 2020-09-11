@@ -128,7 +128,7 @@ public class EventFragment extends BaseFragment implements DefineView {
 
     @SuppressLint("StaticFieldLeak")
     public class FetchEvent extends AsyncTask<Void, Void, Void> {
-        final int SIZE = 7;
+        final int SIZE = 10;
         ArrayList<RcvEvent> rcvEvents = new ArrayList<>();
         HashMap<String, Integer> segsHashMap = new HashMap<>();
         List<ArrayList<Double>> centerWordBag = new ArrayList<>(SIZE);
@@ -249,7 +249,7 @@ public class EventFragment extends BaseFragment implements DefineView {
             for(int i=0; i<SIZE; i++)
                 centerWordBag.add(rcvEvents.get(i).wordBag);
 
-            act_cluster(50);
+            act_cluster(80);
             Log.d("event ", "finish k-means");
 
             for(int k=0; k<SIZE; k++)
