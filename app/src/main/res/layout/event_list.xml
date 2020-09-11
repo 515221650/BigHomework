@@ -35,7 +35,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/abstract_image_blue"
+        android:background="@mipmap/paper3_background"
         android:orientation="vertical">
 
     <FrameLayout
@@ -52,7 +52,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:tooltipText="nizainali"
-            app:cardBackgroundColor="@color/lightBlue"
+            android:background="@mipmap/paper_background"
             app:cardCornerRadius="10dp"
             app:cardElevation="15dp"
             android:layout_marginLeft="20dp"
@@ -79,7 +79,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:tooltipText="nizainali"
-            app:cardBackgroundColor="@color/lightBlue"
+            android:background="@mipmap/paper_background"
             app:cardCornerRadius="10dp"
             app:cardElevation="15dp">
 
@@ -106,7 +106,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:tooltipText="nizainali"
-            app:cardBackgroundColor="@color/lightBlue"
+            android:background="@mipmap/paper_background"
             app:cardCornerRadius="10dp"
             android:layout_marginRight="20dp"
             app:cardElevation="15dp">
@@ -129,6 +129,7 @@
         android:id="@+id/event_list2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:dividerHeight="7dp"
         android:layout_marginTop="5dp"></ListView>
     </LinearLayout>
 </LinearLayout>

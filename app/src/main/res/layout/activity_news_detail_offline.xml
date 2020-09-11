@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:text="TITLE"
                 android:textColor="@color/black"
-                android:textSize="35sp" />
+                android:textSize="27sp" />
 
             <LinearLayout
                 android:id="@+id/tv_newsdetail_offline_layout"
@@ -99,7 +99,7 @@
                 android:paddingTop="20dp"
                 android:text="content"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
         </RelativeLayout>
     </ScrollView>
 

@@ -291,6 +291,7 @@ public class EventFragment extends BaseFragment implements DefineView {
                 int index,now=3;
                 while((index=checked(clusterEvent))<=2 && now<topTags.size())
                 {
+                    Log.d("index",index+"");
                     clusterEvent.keywords[index] = topTags.get(now).getKey();
                     clusterEvent.hotnumber[index] = Integer.toString(topTags.get(now).getValue().intValue());
                     now++;
@@ -323,7 +324,12 @@ public class EventFragment extends BaseFragment implements DefineView {
                 for(int j=0;j<=2;j++)
                 {
                     if(i==j)continue;
-                    if(event.keywords[i].contains(event.keywords[j]))return j;
+                    if(event.keywords[i].contains(event.keywords[j]))
+                    {
+                        Log.d("i","j");
+                        Log.d(event.keywords[i], event.keywords[j]);
+                        return j;
+                    }
                 }
             }
             return 3;
