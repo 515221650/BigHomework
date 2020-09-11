@@ -37,8 +37,14 @@ public class HistoryActivity extends AppCompatActivity {
         buttonBack = findViewById(R.id.btn_his_back);
         init_listener();
 
-        FetchHis process = new FetchHis();
-        process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//        FetchHis process = new FetchHis();
+//        process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        List<NewsHistory> lsHis = newsHistoryDao.getAllHis();
+        newsHisAdapter.newsHistoryArrayList.clear();
+        newsHisAdapter.newsHistoryArrayList.addAll(lsHis);
+        newsHisAdapter.notifyDataSetChanged();
+
     }
 
     void init_listener()
