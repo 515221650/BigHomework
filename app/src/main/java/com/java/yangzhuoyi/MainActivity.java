@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements DefineView {
         transaction.hide(knowledgeGraphFragment);
 
 
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
 
         currentFragment = mainInfoFragment;
     }
@@ -116,23 +116,23 @@ public class MainActivity extends AppCompatActivity implements DefineView {
                 switch (id)
                 {
                     case R.id.rb_news:
-                        transaction.hide(currentFragment).show(mainInfoFragment).commit();
+                        transaction.hide(currentFragment).show(mainInfoFragment).commitAllowingStateLoss();
                         currentFragment = mainInfoFragment;
                         break;
                     case R.id.rb_data:
-                        transaction.hide(currentFragment).show(dataFragment).commit();
+                        transaction.hide(currentFragment).show(dataFragment).commitAllowingStateLoss();
                         currentFragment = dataFragment;
                         break;
                     case R.id.rb_cate:
-                        transaction.hide(currentFragment).show(eventFragment).commit();
+                        transaction.hide(currentFragment).show(eventFragment).commitAllowingStateLoss();
                         currentFragment = eventFragment;
                         break;
                     case R.id.rb_doctor:
-                        transaction.hide(currentFragment).show(expertFragment).commit();
+                        transaction.hide(currentFragment).show(expertFragment).commitAllowingStateLoss();
                         currentFragment = expertFragment;
                         break;
                     case R.id.rb_relation:
-                        transaction.hide(currentFragment).show(knowledgeGraphFragment).commit();
+                        transaction.hide(currentFragment).show(knowledgeGraphFragment).commitAllowingStateLoss();
                         currentFragment = knowledgeGraphFragment;
                         break;
                 }
