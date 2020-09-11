@@ -42,6 +42,7 @@
                 android:text="世界疫情最严重的国家确诊数量统计图"
                 android:textStyle="bold"
                 android:gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="10dp"/>
 

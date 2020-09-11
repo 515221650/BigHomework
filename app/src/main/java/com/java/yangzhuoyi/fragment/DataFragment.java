@@ -2,6 +2,7 @@ package com.java.yangzhuoyi.fragment;
 
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -135,7 +136,10 @@ public class DataFragment extends BaseFragment implements DefineView {
                 StringBuilder data = new StringBuilder();
                 try {
                     HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setConnectTimeout(7000);
+                    httpURLConnection.setReadTimeout(20000);
                     InputStream inputStream = httpURLConnection.getInputStream();
+
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                     String line = "";
                     while (line != null) {
@@ -305,9 +309,10 @@ public class DataFragment extends BaseFragment implements DefineView {
 
         // xAxis
         XAxis xAxis = barChart.getXAxis();
+//        xAxis.setAxisLineWidth(10f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // 位于底部
         xAxis.setDrawGridLines(false); // 不绘制X轴网格线
-        xAxis.setAxisMinimum(-0.3f); // 最小值-0.3f，为了使左侧留出点空间
+        xAxis.setAxisMinimum(-0.5f); // 最小值-0.3f，为了使左侧留出点空间
 //        xAxis.setGranularity(1f); // 间隔尺寸1
         xAxis.setTextSize(7f); // 文本大小14
 //        xAxis.setTypeface(Typeface.DEFAULT_BOLD); // 加粗字体
@@ -324,15 +329,16 @@ public class DataFragment extends BaseFragment implements DefineView {
 //        barDataSet1.setValueTextColor(R.color.black);
 
         MyBarDataSet set = new MyBarDataSet(entries, "data");
-        set.setColors(new int[]{ContextCompat.getColor(getContext(), R.color.chart_red),
-                ContextCompat.getColor(getContext(), R.color.chart_orange),
-                ContextCompat.getColor(getContext(), R.color.chart_yellow),
-                ContextCompat.getColor(getContext(), R.color.chart_green1),
-                ContextCompat.getColor(getContext(), R.color.chart_green2),
-                ContextCompat.getColor(getContext(), R.color.chart_green3),
-                ContextCompat.getColor(getContext(), R.color.chart_blue1),
-                ContextCompat.getColor(getContext(), R.color.chart_blue2)});
+        int[] colors = new int[8];
+        colors[0] = ContextCompat.getColor(getContext(), R.color.deepred);
+        colors[7] = ContextCompat.getColor(getContext(), R.color.orange);
+        colors[3] = ContextCompat.getColor(getContext(), R.color.orangered);
+        colors[1] = colors[2] = ContextCompat.getColor(getContext(), R.color.red);
+        colors[4] = colors[5] = colors[6] = ContextCompat.getColor(getContext(), R.color.orange);
+
+        set.setColors(colors);
         set.setValueTextSize(10);
+
 
         // yAxis
         YAxis axisLeft = barChart.getAxisLeft();
@@ -343,10 +349,11 @@ public class DataFragment extends BaseFragment implements DefineView {
         barChart.getAxisRight().setEnabled(false); // 不启用
 
 
+
         BarData lineData = new BarData(set);
+        lineData.setBarWidth(0.4f);
         barChart.setData(lineData);
         barChart.invalidate(); // refresh
-
     }
 
     @Override
