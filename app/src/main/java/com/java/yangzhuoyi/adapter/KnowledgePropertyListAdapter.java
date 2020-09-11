@@ -54,7 +54,6 @@ public class KnowledgePropertyListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        Log.d("listPos", "is "+position);
         KnowledgePropertyListAdapter.ViewHolder holder = null;
         if(position < kPropertyList.size())
         {

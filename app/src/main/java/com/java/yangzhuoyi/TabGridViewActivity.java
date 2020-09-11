@@ -91,7 +91,6 @@ public class TabGridViewActivity extends AppCompatActivity implements DefineView
         mGv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("clik","clid");
 
                 tabGridViewAdapter2.add((String)tabGridViewAdapter1.getItem(i));
                 tabGridViewAdapter1.delete(i);
@@ -101,7 +100,6 @@ public class TabGridViewActivity extends AppCompatActivity implements DefineView
         mGv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("clik","clid");
 
                 tabGridViewAdapter1.add((String)tabGridViewAdapter2.getItem(i));
                 tabGridViewAdapter2.delete(i);

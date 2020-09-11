@@ -235,13 +235,13 @@ public class PageFragment extends BaseFragment implements DefineView {
                     {
                         NewsDigest newsDigest = new NewsDigest();
                         JSONObject JO2 = (JSONObject) JA2.get(i);
-                        newsDigest.setId((String) JO2.get("_id"));
-                        String _title = (String) JO2.get("title");
+                        newsDigest.setId(JO2.optString("_id"));
+                        String _title =JO2.optString("title");
                         boolean isEn = _title.substring(0, min(1, _title.length())).matches("^[a-zA-Z]*");
                         int base = 1;
                         if(isEn) base = 4;
                         newsDigest.setTitle((_title.substring(0, min(30*base, _title.length()))));
-                        newsDigest.setTime((String) JO2.get("time"));
+                        newsDigest.setTime(JO2.optString("time"));
                         String _source = JO2.optString("source");
                         if(_source.equals("null"))
                             newsDigest.setSource("");

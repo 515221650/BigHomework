@@ -124,7 +124,7 @@ public class EventFragment extends BaseFragment implements DefineView {
 
     @SuppressLint("StaticFieldLeak")
     public class FetchEvent extends AsyncTask<Void, Void, Void> {
-        final int SIZE = 10;
+        final int SIZE = 7;
         ArrayList<RcvEvent> rcvEvents = new ArrayList<>();
         HashMap<String, Integer> segsHashMap = new HashMap<>();
         List<ArrayList<Double>> centerWordBag = new ArrayList<>(SIZE);
@@ -153,7 +153,6 @@ public class EventFragment extends BaseFragment implements DefineView {
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
-                Log.d("get event", "ok");
 
                 JSONObject JO = new JSONObject(data.toString());
                 JSONArray JA2 = (JSONArray) JO.get("data");
@@ -170,19 +169,7 @@ public class EventFragment extends BaseFragment implements DefineView {
                     event.segs.addAll(Arrays.asList(event.seg_title.split("\\s+")));
                     rcvEvents.add(event);
                 }
-                Log.d("event ", "finish");
 
-            }
-            catch (SocketTimeoutException e){
-                e.printStackTrace();
-            }
-            catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
 
             for(int i=0; i<NewsNum; i++)
             {
@@ -257,13 +244,12 @@ public class EventFragment extends BaseFragment implements DefineView {
             for(int i=0; i<SIZE; i++)
                 centerWordBag.add(rcvEvents.get(i).wordBag);
 
-            act_cluster(100);
+            act_cluster(50);
             Log.d("event ", "finish k-means");
 
             for(int k=0; k<SIZE; k++)
             {
                 ArrayList<RcvEvent> cluster = FinalEventCluster.get(k);
-                Log.d("event ", "now cluster size "+cluster.size());
                 if (cluster.size() > 100 || cluster.size() < 5) continue;
                 ArrayList<Double> wordBagSum = new ArrayList<>();
                 int clusterSize = cluster.size();
@@ -307,13 +293,16 @@ public class EventFragment extends BaseFragment implements DefineView {
 //                Log.d("1","2333"+" "+eventClusterSize);
                 eventSourceList.add(clusterEvent);
             }
-            Log.d("event ", "finish main work");
-            int lennn = eventSourceList.size();
-            Log.d("event ", "num "+lennn);
-            for(int i=0; i<lennn; i++)
-            {
-                Log.d("event ", "No. "+ i + " size: "+eventSourceList.get(i).events.size()+" hot word:"+eventSourceList.get(i).keywords[0]
-                + " " + eventSourceList.get(i).keywords[1] + " " + eventSourceList.get(i).keywords[2]);
+            }
+            catch (SocketTimeoutException e){
+                e.printStackTrace();
+            }
+            catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
             return null;
         }
@@ -346,15 +335,7 @@ public class EventFragment extends BaseFragment implements DefineView {
                 FinalEventCluster = new ArrayList<>();
                 for(int i=0; i<SIZE; i++)
                     FinalEventCluster.add(new ArrayList<RcvEvent>());
-                if(t == 1)
-                {
-                    String out = new String("");
-                    for(int pp=0; pp<300; pp++)
-                    {
-                        out += " " + centerWordBag.get(0).get(pp);
-                    }
-                    Log.d("center wordbag 0", out);
-                }
+
                 for(RcvEvent event: rcvEvents)
                 {
                     double mindist = 10000;

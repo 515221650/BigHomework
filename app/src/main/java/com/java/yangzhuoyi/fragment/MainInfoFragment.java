@@ -8,7 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ListPopupWindow;
+import android.widget.TextView;
+
 import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -22,9 +27,11 @@ import com.java.yangzhuoyi.MainActivity;
 import com.java.yangzhuoyi.R;
 import com.java.yangzhuoyi.TabGridViewActivity;
 import com.java.yangzhuoyi.adapter.FixedPagerAdapter;
+import com.java.yangzhuoyi.adapter.SuggestArrayAdapter;
 import com.java.yangzhuoyi.common.DefineView;
 import com.java.yangzhuoyi.NewsSearchActivity;
 import com.google.android.material.tabs.TabLayout;
+import com.java.yangzhuoyi.util.SearchHistory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +49,8 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
     FloatingActionButton fab, fabHis, fabFavor;
     Animation fabOpen, fabClose, rotateForward, rotateBackward;
     boolean isOpen = false;
+
+    ListPopupWindow listPopupWindow;
 
     @Nullable
     @Override
@@ -69,6 +78,9 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
         fabClose = AnimationUtils.loadAnimation(getContext(), R.anim.fab_close);
         rotateForward = AnimationUtils.loadAnimation(getContext(), R.anim.rotate_forward);
         rotateBackward = AnimationUtils.loadAnimation(getContext(), R.anim.rotate_backward);
+        listPopupWindow = new ListPopupWindow(getActivity());
+        listPopupWindow.setAdapter(new SuggestArrayAdapter(getContext()));
+        listPopupWindow.setAnchorView(searchView);
 
     }
 
@@ -104,8 +116,9 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.d("tagg", query);
+                listPopupWindow.dismiss();
                 Intent intent = new Intent(getActivity(), NewsSearchActivity.class);
+                SearchHistory.saveSearchHistory(query, getContext());
                 intent.putExtra("keyword", query);
                 startActivity(intent);
                 return true;
@@ -114,6 +127,25 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
             @Override
             public boolean onQueryTextChange(String s) {
                 return false;
+            }
+
+        });
+        //监听输入内容焦点的变化
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Log.d("TextFocusChange",  " " +hasFocus);
+                Log.d("get his num", ""+SearchHistory.getSearchHistory(getContext()).size());
+                if(hasFocus) listPopupWindow.show();
+                else listPopupWindow.dismiss();
+            }
+        });
+//
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(getActivity(), NewsSearchActivity.class);
+//                startActivity(intent);
             }
         });
 
@@ -134,6 +166,18 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), FavorActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        listPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listPopupWindow.dismiss();
+                Intent intent = new Intent(getActivity(), NewsSearchActivity.class);
+                String keyword = SearchHistory.getSearchHistory(getContext()).get(position);
+                intent.putExtra("keyword", keyword);
+                SearchHistory.saveSearchHistory(keyword, getContext());
                 startActivity(intent);
             }
         });
@@ -158,7 +202,6 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
         for (String tmp_title : titles) {
             fragments.add(PageFragment.newInstance(tmp_title));
         }
-        Log.d("size", fragments.size()+"size");
         fixedPagerAdapter.updateList(fragments, titles);
     }
 
@@ -183,4 +226,6 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
             isOpen = true;
         }
     }
+
+
 }

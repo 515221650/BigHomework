@@ -43,7 +43,6 @@ public class EventListActivity extends AppCompatActivity implements DefineView {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("yyds",this.toString());
                 finish();
             }
         });

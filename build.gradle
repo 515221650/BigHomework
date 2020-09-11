@@ -23,8 +23,9 @@ allprojects {
         maven {
             url "https://jitpack.io"
         }
-        mavenCentral()
         maven { url "https://dl.bintray.com/thelasterstar/maven/" }
+        mavenCentral()
+
     }
 }
 task clean(type: Delete) {

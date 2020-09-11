@@ -85,7 +85,6 @@ public class NewsDetailActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("yyds",this.toString());
                 finish();
             }
         });

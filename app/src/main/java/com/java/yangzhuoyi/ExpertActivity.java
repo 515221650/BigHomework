@@ -16,7 +16,6 @@ import com.java.yangzhuoyi.util.Expert;
 public class ExpertActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("!!!","!!!!!!!!!!!!!");
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_expert_detail);
@@ -24,7 +23,6 @@ public class ExpertActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("yyds",this.toString());
                 finish();
             }
         });
@@ -32,7 +30,6 @@ public class ExpertActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Expert expert = (Expert) intent.getSerializableExtra("expert");
 
-        Log.d("hellooooooo","qwe");
         TextView enName = findViewById(R.id.expert_en_name);
         enName.setText(expert.name);
         TextView name = findViewById(R.id.expert_name);

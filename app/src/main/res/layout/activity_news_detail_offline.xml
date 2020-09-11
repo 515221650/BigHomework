@@ -126,16 +126,16 @@
         android:visibility="invisible"
         app:pressedTranslationZ="16dp"
         />
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_fav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="220dp"
-        android:layout_marginRight="16dp"
-        android:backgroundTint="@color/tabBack"
-        android:src="@drawable/ic_favorite_24"
-        android:visibility="invisible"
-        app:pressedTranslationZ="16dp"
-        />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fab_fav"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:layout_marginBottom="220dp"-->
+<!--        android:layout_marginRight="16dp"-->
+<!--        android:backgroundTint="@color/tabBack"-->
+<!--        android:src="@drawable/ic_favorite_24"-->
+<!--        android:visibility="invisible"-->
+<!--        app:pressedTranslationZ="16dp"-->
+<!--        />-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

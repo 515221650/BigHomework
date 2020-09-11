@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -33,6 +34,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 
 import me.shihao.library.XRadioGroup;
@@ -60,8 +62,8 @@ public class MainActivity extends AppCompatActivity implements DefineView {
         initListener();
         binData();
 
-//        FetchAllNews process = new FetchAllNews();
-//        process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        FetchAllNews process = new FetchAllNews();
+        process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements DefineView {
 
 
         mainInfoFragment = new MainInfoFragment();
-        dataFragment = new DataFragment();
+//        dataFragment = new DataFragment();
         expertFragment = new ExpertFragment();
         knowledgeGraphFragment = new KnowledgeGraphFragment();
         eventFragment = new EventFragment();
@@ -80,13 +82,13 @@ public class MainActivity extends AppCompatActivity implements DefineView {
 
         transaction.add(R.id.fragment_container, eventFragment);
         transaction.add(R.id.fragment_container, knowledgeGraphFragment);
-        transaction.add(R.id.fragment_container, dataFragment);
+//        transaction.add(R.id.fragment_container, dataFragment);
         transaction.add(R.id.fragment_container, expertFragment);
         transaction.add(R.id.fragment_container, mainInfoFragment);
 
         transaction.hide(eventFragment);
         transaction.hide(expertFragment);
-        transaction.hide(dataFragment);
+//        transaction.hide(dataFragment);
         transaction.hide(knowledgeGraphFragment);
 
 
@@ -152,37 +154,52 @@ public class MainActivity extends AppCompatActivity implements DefineView {
         protected Void doInBackground(Void... voids) {
             newsSearchItemDao.deleteAllNews();
             try {
-                URL url = new URL("https://covid-dashboard.aminer.cn/api/dist/events.json");
-                StringBuilder data = new StringBuilder();
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String line = "";
-                while (line != null) {
-                    line = bufferedReader.readLine();
-                    data.append(line);
-                }
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-
-
-                JSONObject JO = new JSONObject(data.toString());
-                JSONArray JA = (JSONArray) JO.get("datas");
-                int NewsNum = JA.length();
-                for(int i=0; i<NewsNum; i++)
+                for(int pp=10; pp>=1; pp--)
                 {
-                    JSONObject JO2 = (JSONObject) JA.get(i);
-                    NewsSearchItem tmpItem = new NewsSearchItem();
-                    tmpItem.setNewsId(JO2.optString("_id"));
-                    tmpItem.setType(JO2.optString("type"));
-                    tmpItem.setTime(JO2.optString("time"));
-                    tmpItem.setTitle(JO2.optString("title"));
-                    newsSearchItemDao.insertNewsSearch(tmpItem);
+                    Log.d("start: ", "to " +pp);
+
+                    URL url = new URL("https://covid-dashboard.aminer.cn/api/events/list?type=news&page="+pp+"&size=400");
+                    StringBuilder data = new StringBuilder();
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setConnectTimeout(5000);
+                    httpURLConnection.setReadTimeout(20000);
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    Log.d("get inputstream: ", "to " +pp);
+
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                    String line = "";
+                    while (line != null) {
+                        line = bufferedReader.readLine();
+                        data.append(line);
+                    }
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    Log.d("finish connection: ", "to " +pp);
+
+
+                    JSONObject JO = new JSONObject(data.toString());
+                    JSONArray JA = (JSONArray) JO.get("data");
+                    int NewsNum = JA.length();
+                    for(int i=NewsNum-1; i>=0; i--)
+                    {
+                        Log.d("store data: ", "to " +pp);
+                        JSONObject JO2 = (JSONObject) JA.get(i);
+                        NewsSearchItem tmpItem = new NewsSearchItem();
+                        tmpItem.setNewsId(JO2.optString("_id"));
+//                        tmpItem.setType(JO2.optString("type"));
+                        tmpItem.setTime(JO2.optString("time"));
+                        tmpItem.setTitle(JO2.optString("title"));
+                        Log.d("store data: ", "to " +pp);
+                        newsSearchItemDao.insertNewsSearch(tmpItem);
+                    }
+                    Log.d("get data: ", "to " +pp);
                 }
-
-
-            } catch (MalformedURLException e) {
+            }
+            catch (SocketTimeoutException e){
+                e.printStackTrace();
+            }
+            catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();

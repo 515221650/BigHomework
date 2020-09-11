@@ -29,7 +29,7 @@ public class NewsDetailOfflineActivity extends AppCompatActivity {
     private NewsFavorDatabase newsFavorDatabase;
     private NewsFavorDao newsFavorDao;
 
-    FloatingActionButton fab, fabShare, fabFavor;
+    FloatingActionButton fab, fabFavor;
     Animation fabOpen, fabClose, rotateForward, rotateBackward;
     boolean isOpen = false;
 
@@ -66,7 +66,7 @@ public class NewsDetailOfflineActivity extends AppCompatActivity {
 
         fab = findViewById(R.id.fab_more);
         fabFavor = findViewById(R.id.fab_fav);
-        fabShare = findViewById(R.id.fab_share);
+//        fabShare = findViewById(R.id.fab_share);
         fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open);
         fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close);
         rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward);
@@ -107,8 +107,8 @@ public class NewsDetailOfflineActivity extends AppCompatActivity {
         {
             fab.startAnimation(rotateBackward);
             fabFavor.startAnimation(fabClose);
-            fabShare.startAnimation(fabClose);
-            fabShare.setClickable(false);
+//            fabShare.startAnimation(fabClose);
+//            fabShare.setClickable(false);
             fabFavor.setClickable(false);
             isOpen = false;
         }
@@ -116,8 +116,8 @@ public class NewsDetailOfflineActivity extends AppCompatActivity {
         {
             fab.startAnimation(rotateForward);
             fabFavor.startAnimation(fabOpen);
-            fabShare.startAnimation(fabOpen);
-            fabShare.setClickable(true);
+//            fabShare.startAnimation(fabOpen);
+//            fabShare.setClickable(true);
             fabFavor.setClickable(true);
             isOpen = true;
         }

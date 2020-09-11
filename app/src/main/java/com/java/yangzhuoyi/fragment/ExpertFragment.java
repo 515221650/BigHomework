@@ -73,7 +73,6 @@ public class ExpertFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initListener() {
-        Log.d("AAS", radioGroup.toString());
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -96,7 +95,6 @@ public class ExpertFragment extends BaseFragment implements DefineView {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ExpertActivity.class);
                 intent.putExtra("expert", expertListAdapter.expertList.get(i));
-                Log.d("!!!","!!!!!!!!!!!!!");
                 startActivity(intent);
             }
         });

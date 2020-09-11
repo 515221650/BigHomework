@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
@@ -142,7 +144,6 @@ public class DataFragment extends BaseFragment implements DefineView {
                     }
                     bufferedReader.close();
                     inputStream.close();
-                    Log.d("return val", data.toString());
                     JSONObject JO = new JSONObject(data.toString());
                     Iterator iterator = JO.keys();
                     while (iterator.hasNext()) {
@@ -233,7 +234,6 @@ public class DataFragment extends BaseFragment implements DefineView {
 
             @Override
             public String format(Integer integer) {
-                Log.d("AA",""+nameList.size()+" "+integer+" "+nameList.get(integer-1));
 
                 if(integer<=nameList.size())return nameList.get(integer-1);
                 return "";
@@ -266,7 +266,6 @@ public class DataFragment extends BaseFragment implements DefineView {
                 if(cellInfo.row%2==0){
                     paint.clearShadowLayer();
                     paint.setColor(getResources().getColor(R.color.lightBlue));
-                    Log.d("??",paint.getColor()+"");
                     canvas.drawRect(rect,paint);
                 }
             }
@@ -282,7 +281,6 @@ public class DataFragment extends BaseFragment implements DefineView {
     public void init_bar(BarChart barChart, List<Pos> map2){
 
         final List<Pos> map = map2.subList(0,7);
-        Log.d("???!!!",map.size()+"");
         Description description = new Description();
         description.setText("");
         description.setTextSize(18f);
@@ -377,7 +375,6 @@ public class DataFragment extends BaseFragment implements DefineView {
                 if(isScroll){
                     for(int i=tabTxt.length-1;i>=0;i--)
                     {
-                        Log.d(">>>",y+" "+i);
                         if(y>anchorList.get(i).getTop()-1)
                         {
                             if(i!=tabTxt.length-1&&y<anchorList.get(i+1).getTop())

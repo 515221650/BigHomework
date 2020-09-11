@@ -30,7 +30,6 @@ public class EventAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        Log.d("Adapter count", "is "+eventList.size());
         return eventList.size();
     }
 

@@ -29,7 +29,6 @@ public class FixedPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Log.d("aa", position+"");
         return fragments.get(position);
     }
 
@@ -62,7 +61,6 @@ public class FixedPagerAdapter extends FragmentStatePagerAdapter {
     public void updateList(List<BaseFragment> fragments, String[] titles) {
         this.fragments = fragments;
         this.titles = titles;
-        Log.d("bb", this.fragments.size()+"");
         notifyDataSetChanged();
     }
 

@@ -88,7 +88,6 @@ public class ExpertListAdapter extends BaseAdapter {
         holder.affiliation.setText(expert.affiliation);
         holder.avatar.setVisibility(View.VISIBLE);
         Glide.with(mContext).load(expert.avatar).into(holder.avatar);
-        Log.d("print",i+"");
         return view;
     }
 }

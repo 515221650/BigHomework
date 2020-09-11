@@ -69,7 +69,6 @@ public class NewsListAdapter extends BaseAdapter {
         holder.tvTime.setText(newsDigestArrayList.get(position).getTime());
         holder.tvSource.setText(newsDigestArrayList.get(position).getSource());
 
-        Log.d("hasread", position + " " + newsDigestArrayList.get(position).getHasRead());
         if(newsDigestArrayList.get(position).getHasRead())
         {
             holder.tvTitle.setTextColor(mContext.getResources().getColor(R.color.garyDark));
