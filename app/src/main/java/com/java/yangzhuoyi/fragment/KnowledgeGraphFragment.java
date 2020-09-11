@@ -119,6 +119,7 @@ public class KnowledgeGraphFragment extends Fragment {
         String queryStr;
         String titleTXT, introTXT;
         boolean imgVis;
+        boolean netConnect;
         String imgUrl = "";
         @Override
         protected Void doInBackground(Void... voids) {
@@ -193,17 +194,27 @@ public class KnowledgeGraphFragment extends Fragment {
 
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
+                    netConnect = false;
+                    return null;
                 }
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
+                netConnect = false;
+                return null;
             }
+            netConnect = true;
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            if(!netConnect)
+            {
+                circleLayout.setVisibility(View.GONE);
+                mainLayout.setVisibility(View.VISIBLE);
+            }
             if(imgVis) ivPic.setVisibility(View.VISIBLE);
             else ivPic.setVisibility(View.INVISIBLE);
             tvTitle.setText(titleTXT);

@@ -134,6 +134,7 @@ public class EventFragment extends BaseFragment implements DefineView {
         List<ArrayList<Double>> centerWordBag = new ArrayList<>(SIZE);
         ArrayList<ArrayList<RcvEvent>> FinalEventCluster;
         HashSet<String> StopWords = new HashSet<>();
+        boolean netConnect;
 
         int NewsNum;
 
@@ -306,17 +307,12 @@ public class EventFragment extends BaseFragment implements DefineView {
 //                Log.d("1","2333"+" "+eventClusterSize);
                 eventSourceList.add(clusterEvent);
             }
+            } catch (IOException | JSONException e){
+                e.printStackTrace();
+                netConnect = false;
+                return null;
             }
-            catch (SocketTimeoutException e){
-                e.printStackTrace();
-            }
-            catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            netConnect = true;
             return null;
         }
 
@@ -337,6 +333,12 @@ public class EventFragment extends BaseFragment implements DefineView {
         protected void onPostExecute(Void aVoid)
         {
             super.onPostExecute(aVoid);
+            if(!netConnect)
+            {
+                circleLayout.setVisibility(View.GONE);
+                eventList.setVisibility(View.VISIBLE);
+                return;
+            }
             circleLayout.setVisibility(View.GONE);
             eventList.setVisibility(View.VISIBLE);
             eventAdapter.eventList.clear();

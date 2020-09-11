@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +107,7 @@ public class ExpertFragment extends BaseFragment implements DefineView {
     public class FetchExpert extends AsyncTask<Void, Void, Void> {
         List<Expert>live = new ArrayList<>();
         List<Expert>not_live = new ArrayList<>();
+        Boolean netConnect;
         @Override
         protected Void doInBackground(Void... voids) {
             try {
@@ -173,19 +175,37 @@ public class ExpertFragment extends BaseFragment implements DefineView {
                     }
 
 
-                } catch (IOException | JSONException e) {
+                } catch (SocketTimeoutException e) {
                     e.printStackTrace();
+                    netConnect = false;
+                    Log.d("hahahha", "hahhaha");
+                    return null;
+                }
+                catch (IOException | JSONException e){
+                    e.printStackTrace();
+                    Log.d("33333", "33333");
+                    netConnect = false;
+                    return null;
+
                 }
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
+                netConnect = false;
+                Log.d("33333", "33333");
+                return null;
             }
+            netConnect = true;
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            if(!netConnect)
+            {
+                return;
+            }
             expertListAdapter.expertList.addAll(live);
             live_expert = live;
             not_live_expert = not_live;

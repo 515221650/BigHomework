@@ -182,6 +182,7 @@ public class PageFragment extends BaseFragment implements DefineView {
     private class FetchNewsList extends AsyncTask<Void, Void, Void> {
         String newsClass = "";
         final int pageSize = 20;
+        boolean netConnect;
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -189,6 +190,7 @@ public class PageFragment extends BaseFragment implements DefineView {
             if(forward)
             {
                 getContent(1, true);
+                if(!netConnect)return null;
             }
             else
             {
@@ -198,6 +200,7 @@ public class PageFragment extends BaseFragment implements DefineView {
                 while(true)
                 {
                     boolean res = getContent(maxPage, false);
+                    if(!netConnect)return null;
                     if(res || (maxPageBound == maxPage))
                     {
                         break;
@@ -226,7 +229,7 @@ public class PageFragment extends BaseFragment implements DefineView {
                     HttpURLConnection httpURLConnection =  (HttpURLConnection) url.openConnection();
                     Log.d("first", "first");
                     httpURLConnection.setConnectTimeout(5000);
-                    httpURLConnection.setReadTimeout(20000);
+                    httpURLConnection.setReadTimeout(10000);
                     InputStream inputStream = httpURLConnection.getInputStream();
                     Log.d("second", "second");
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -284,16 +287,19 @@ public class PageFragment extends BaseFragment implements DefineView {
                     }
                     httpURLConnection.disconnect();
 
-                } catch (SocketTimeoutException | JSONException e) {
+                } catch (IOException | JSONException e) {
                     e.printStackTrace();
-                }
-                catch (IOException e){
-                    e.printStackTrace();
+                    netConnect = false;
+                    return hasNewNews;
                 }
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
+
+                netConnect = false;
+                return hasNewNews;
             }
+            netConnect = true;
             return hasNewNews;
         }
 

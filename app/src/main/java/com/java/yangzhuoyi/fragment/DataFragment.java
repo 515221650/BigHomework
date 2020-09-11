@@ -56,6 +56,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -137,6 +138,7 @@ public class DataFragment extends BaseFragment implements DefineView {
     public class FetchData extends AsyncTask<Void, Void, Void> {
         List<Pos> in_chinaMap = new ArrayList<>();
         List<Pos> in_worldMap = new ArrayList<>();
+        Boolean netConnect;
         @Override
         protected Void doInBackground(Void... voids) {
             try {
@@ -175,19 +177,42 @@ public class DataFragment extends BaseFragment implements DefineView {
                         }
                     }
 
-                } catch (IOException | JSONException e) {
+                }
+                catch (SocketTimeoutException e) {
+                e.printStackTrace();
+                    netConnect = false;
+                Log.d("hahahha", "hahhaha");
+                    return null;
+
+
+                }
+                catch (IOException | JSONException e){
                     e.printStackTrace();
+                    Log.d("33333", "33333");
+                    netConnect = false;
+                    return null;
+
                 }
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
+                netConnect = false;
+                Log.d("33333", "33333");
+                return null;
             }
+            netConnect = true;
+            Log.d("444444", "444444");
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            if(!netConnect)
+            {
+                circleView.setVisibility(View.GONE);
+                return;
+            }
             chinaMap.addAll(in_chinaMap);
             worldMap.addAll(in_worldMap);
             chinaMap.sort(new Comparator<Pos>() {
@@ -203,6 +228,7 @@ public class DataFragment extends BaseFragment implements DefineView {
                 }
             });
 //            Log.d("LIstsiz", worldMap.size()+"");
+
 
             init_bar(barChart, worldMap);
             init_table(smartTableIn,chinaMap,"国内疫情数据");
@@ -296,7 +322,6 @@ public class DataFragment extends BaseFragment implements DefineView {
         smartTable.setTableData(tableData);
     }
     public void init_bar(BarChart barChart, List<Pos> map2){
-
         final List<Pos> map = map2.subList(0,7);
         Description description = new Description();
         description.setText("");
