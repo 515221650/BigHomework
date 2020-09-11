@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements DefineView {
 
 
         mainInfoFragment = new MainInfoFragment();
-//        dataFragment = new DataFragment();
+        dataFragment = new DataFragment();
         expertFragment = new ExpertFragment();
         knowledgeGraphFragment = new KnowledgeGraphFragment();
         eventFragment = new EventFragment();
@@ -82,13 +82,13 @@ public class MainActivity extends AppCompatActivity implements DefineView {
 
         transaction.add(R.id.fragment_container, eventFragment);
         transaction.add(R.id.fragment_container, knowledgeGraphFragment);
-//        transaction.add(R.id.fragment_container, dataFragment);
+        transaction.add(R.id.fragment_container, dataFragment);
         transaction.add(R.id.fragment_container, expertFragment);
         transaction.add(R.id.fragment_container, mainInfoFragment);
 
         transaction.hide(eventFragment);
         transaction.hide(expertFragment);
-//        transaction.hide(dataFragment);
+        transaction.hide(dataFragment);
         transaction.hide(knowledgeGraphFragment);
 
 
