@@ -131,8 +131,10 @@ public class NewsDetailActivity extends AppCompatActivity {
 
     private String getSharedText() {
         String text = "【来自"+newsSource+"的消息："+newsTitle+"】"+"\n"+newsContent;
-        if(text.length()>=140)
-            text = text.substring(0, 139);
+        if(text.length()>=140) {
+            text = text.substring(0, 136);
+            text = text + "...";
+        }
         return text;
     }
 
