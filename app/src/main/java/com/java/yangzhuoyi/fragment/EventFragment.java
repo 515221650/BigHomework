@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -49,6 +50,7 @@ public class EventFragment extends BaseFragment implements DefineView {
     private ListView eventList;
     private List<Event> eventSourceList = new ArrayList<>();
     private EventAdapter eventAdapter;
+    private LinearLayout circleLayout;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,6 +70,8 @@ public class EventFragment extends BaseFragment implements DefineView {
     @Override
     public void initView() {
         eventList = mView.findViewById(R.id.event_list);
+        eventList.setVisibility(View.INVISIBLE);
+        circleLayout = mView.findViewById(R.id.circular_view);
     }
 
     @Override
@@ -274,12 +278,21 @@ public class EventFragment extends BaseFragment implements DefineView {
                     }
                 });
 
+
                 Event clusterEvent = new Event();
                 clusterEvent.events = new ArrayList<>();
                 for(int pp=0; pp<3; pp++)
                 {
                     clusterEvent.keywords[pp] = topTags.get(pp).getKey();
                     clusterEvent.hotnumber[pp] = Integer.toString(topTags.get(pp).getValue().intValue());
+                }
+
+                int index,now=3;
+                while((index=checked(clusterEvent))<=2 && now<topTags.size())
+                {
+                    clusterEvent.keywords[index] = topTags.get(now).getKey();
+                    clusterEvent.hotnumber[index] = Integer.toString(topTags.get(now).getValue().intValue());
+                    now++;
                 }
                 int eventClusterSize = cluster.size();
                 for(int pp=0; pp<eventClusterSize; pp++)
@@ -306,10 +319,26 @@ public class EventFragment extends BaseFragment implements DefineView {
             }
             return null;
         }
+
+        int checked(Event event)
+        {
+            for(int i=0;i<=2;i++)
+            {
+                for(int j=0;j<=2;j++)
+                {
+                    if(i==j)continue;
+                    if(event.keywords[i].contains(event.keywords[j]))return j;
+                }
+            }
+            return 3;
+        }
+
         @Override
         protected void onPostExecute(Void aVoid)
         {
             super.onPostExecute(aVoid);
+            circleLayout.setVisibility(View.GONE);
+            eventList.setVisibility(View.VISIBLE);
             eventAdapter.eventList.clear();
             eventAdapter.eventList.addAll(eventSourceList);
             eventAdapter.notifyDataSetChanged();

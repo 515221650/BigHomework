@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -70,6 +71,9 @@ public class DataFragment extends BaseFragment implements DefineView {
     private TabLayout tabLayout;
     private CustomScrollView scrollView;
     private List<View> anchorList = new ArrayList<>();
+    private LinearLayout circleView;
+    private LinearLayout dataLayout;
+    private View divider;
     // 1由scrollview引起， 0由tablayout引起
     private boolean isScroll = true;
     //记录上一次位置，防止在同一内容块里滑动 重复定位到tablayout
@@ -120,6 +124,11 @@ public class DataFragment extends BaseFragment implements DefineView {
         anchorList.add(mView.findViewById(R.id.ll_table_in));
 
         tabLayout =  mView.findViewById(R.id.data_tab_layout);
+        circleView = mView.findViewById(R.id.circular_view);
+        dataLayout = mView.findViewById(R.id.data_layout);
+        dataLayout.setVisibility(View.INVISIBLE);
+        divider = mView.findViewById(R.id.divider_blue);
+        divider.setVisibility(View.INVISIBLE);
         scrollView = (CustomScrollView)mView.findViewById(R.id.scrollView);
     }
 
@@ -194,9 +203,13 @@ public class DataFragment extends BaseFragment implements DefineView {
                 }
             });
 //            Log.d("LIstsiz", worldMap.size()+"");
+
             init_bar(barChart, worldMap);
             init_table(smartTableIn,chinaMap,"国内疫情数据");
             init_table(smartTableOut,worldMap,"国外疫情数据");
+            circleView.setVisibility(View.GONE);
+            dataLayout.setVisibility(View.VISIBLE);
+            divider.setVisibility(View.VISIBLE);
         }
     }
 

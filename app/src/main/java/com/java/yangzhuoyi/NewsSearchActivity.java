@@ -74,7 +74,7 @@ public class NewsSearchActivity extends AppCompatActivity {
                 SearchHistory.saveSearchHistory(query, NewsSearchActivity.this);
                 searchAsyncTask process = new searchAsyncTask(newsSearchItemDao);
                 process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, query);
-
+                searchView.clearFocus();
                 return true;
             }
 

@@ -112,7 +112,6 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
                 startActivityForResult(intent,1 );
             }
         });
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -121,6 +120,7 @@ public class MainInfoFragment extends BaseFragment implements DefineView {
                 SearchHistory.saveSearchHistory(query, getContext());
                 intent.putExtra("keyword", query);
                 startActivity(intent);
+                searchView.clearFocus();
                 return true;
             }
 

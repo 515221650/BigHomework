@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,6 +41,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.List;
 
@@ -53,6 +56,7 @@ public class PageFragment extends BaseFragment implements DefineView {
     private TextView tvPage;
     private RefreshLayout refreshLayout;
     private ListView lvNews;
+    private LinearLayout circleLayout;
     public NewsListAdapter newsListAdapter;
 
     private int maxPage = 0;
@@ -119,6 +123,10 @@ public class PageFragment extends BaseFragment implements DefineView {
 
         refreshLayout.setRefreshFooter(new BallPulseFooter(getActivity()).setSpinnerStyle(SpinnerStyle.Scale));
         refreshLayout.setEnableOverScrollBounce(true);//是否启用越界回弹
+
+        circleLayout = mView.findViewById(R.id.circular_view);
+
+
 
         FetchNewsList process = new FetchNewsList();
         process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -202,6 +210,7 @@ public class PageFragment extends BaseFragment implements DefineView {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            circleLayout.setVisibility(View.GONE);
             if(forward) refreshLayout.finishRefresh();
             else refreshLayout.finishLoadMore();
             newsListAdapter.notifyDataSetChanged();
@@ -214,10 +223,12 @@ public class PageFragment extends BaseFragment implements DefineView {
                 URL url = new URL("https://covid-dashboard.aminer.cn/api/events/list?type="+newsClass+"&page="+page+"&size="+pageSize);
                 StringBuilder data = new StringBuilder();
                 try {
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    HttpURLConnection httpURLConnection =  (HttpURLConnection) url.openConnection();
+                    Log.d("first", "first");
                     httpURLConnection.setConnectTimeout(5000);
                     httpURLConnection.setReadTimeout(20000);
                     InputStream inputStream = httpURLConnection.getInputStream();
+                    Log.d("second", "second");
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                     String line = "";
                     while(line != null)
@@ -273,7 +284,10 @@ public class PageFragment extends BaseFragment implements DefineView {
                     }
                     httpURLConnection.disconnect();
 
-                } catch (IOException | JSONException e) {
+                } catch (SocketTimeoutException | JSONException e) {
+                    e.printStackTrace();
+                }
+                catch (IOException e){
                     e.printStackTrace();
                 }
 

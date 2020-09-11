@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import androidx.appcompat.widget.SearchView;
@@ -39,6 +40,7 @@ import java.util.Iterator;
 public class KnowledgeGraphFragment extends Fragment {
     private View mView;
     private TextView tvTitle, tvIntro;
+    private LinearLayout circleLayout, mainLayout;
     ImageView ivPic;
     ListView lvProperty, lvRelation;
     SearchView searchView;
@@ -75,9 +77,12 @@ public class KnowledgeGraphFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.d("tagg", query);
+                circleLayout.setVisibility(View.VISIBLE);
+                mainLayout.setVisibility(View.INVISIBLE);
                 FetchKnowledge process = new FetchKnowledge();
                 process.queryStr = query;
                 process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                searchView.clearFocus();
                 return true;
             }
 
@@ -103,6 +108,10 @@ public class KnowledgeGraphFragment extends Fragment {
         lvProperty.setAdapter(knowledgePropertyListAdapter);
 
         searchView = mView.findViewById(R.id.search_view_knowledge);
+
+        circleLayout = mView.findViewById(R.id.circular_view);
+        mainLayout = mView.findViewById(R.id.main_page);
+        circleLayout.setVisibility(View.GONE);
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -206,6 +215,9 @@ public class KnowledgeGraphFragment extends Fragment {
             knowledgePropertyListAdapter.notifyDataSetChanged();
 
             Glide.with(getContext()).load(imgUrl).into(ivPic);
+
+            circleLayout.setVisibility(View.GONE);
+            mainLayout.setVisibility(View.VISIBLE);
         }
     }
 

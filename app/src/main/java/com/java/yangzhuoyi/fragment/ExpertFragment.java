@@ -155,13 +155,13 @@ public class ExpertFragment extends BaseFragment implements DefineView {
                             tmp_expert.work = profile.getString("work");
                         else tmp_expert.work = "";
 
-                        tmp_expert.bio = tmp_expert.bio.replaceAll("<br><br>","\n");
-                        tmp_expert.work = tmp_expert.work.replaceAll("<br><br>","\n");
-                        tmp_expert.edu = tmp_expert.edu.replaceAll("<br><br>","\n");
+                        tmp_expert.bio = tmp_expert.bio.replaceAll("<br><br>","\n  ");
+                        tmp_expert.work = tmp_expert.work.replaceAll("<br><br>","\n  ");
+                        tmp_expert.edu = tmp_expert.edu.replaceAll("<br><br>","\n  ");
 
-                        tmp_expert.bio = tmp_expert.bio.replaceAll("<br>"," ");
-                        tmp_expert.work = tmp_expert.work.replaceAll("<br>"," ");
-                        tmp_expert.edu = tmp_expert.edu.replaceAll("<br>"," ");
+                        tmp_expert.bio = tmp_expert.bio.replaceAll("<br>","\n  ");
+                        tmp_expert.work = tmp_expert.work.replaceAll("<br>","\n  ");
+                        tmp_expert.edu = tmp_expert.edu.replaceAll("<br>","\n  ");
 
 
 

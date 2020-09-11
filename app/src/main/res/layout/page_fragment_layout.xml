@@ -4,8 +4,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+    <LinearLayout
+        android:id="@+id/circular_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingTop="100dp"
+        android:paddingBottom="300dp">
+        <org.quanqi.circularprogress.CircularProgressView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            app:angleAnimationDurationMillis="1700"
+            app:borderWidth="8dp"
+            app:colorSequence="@array/circular_default_color_sequence"
+            app:sweepAnimationDurationMillis="900" />
+    </LinearLayout>
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
@@ -19,7 +34,6 @@
             app:srlAccentColor="@color/white"
             app:srlPrimaryColor="@color/white"
             tools:targetApi="p" />
-
         <ListView
             android:id="@+id/lv_newslist"
             android:layout_width="match_parent"

@@ -2,10 +2,9 @@ package com.java.yangzhuoyi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.telecom.Call;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -25,7 +24,6 @@ import com.java.yangzhuoyi.util.WebConstants;
 import com.sina.weibo.sdk.WbSdk;
 import com.sina.weibo.sdk.api.TextObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
-import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WbAuthListener;
@@ -123,13 +121,18 @@ public class NewsDetailActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        Typeface face = Typeface.createFromAsset(getAssets(),
+                "fonts/yousong.ttf");
+        tvContent.setTypeface(face);
     }
 
 
     private String getSharedText() {
         String text = "【来自"+newsSource+"的消息："+newsTitle+"】"+"\n"+newsContent;
         if(text.length()>=140)
-            text.substring(0, 139);
+            text = text.substring(0, 139);
         return text;
     }
 
@@ -189,6 +192,15 @@ public class NewsDetailActivity extends AppCompatActivity {
                     JSONObject JO = new JSONObject(data.toString());
                     JSONObject JO2 = (JSONObject) JO.get("data");
                     newsContent = JO2.getString("content");
+                    newsContent = "    " + newsContent;
+                    if(JO2.getString("lang").equals("en"))
+                    {
+                        newsContent = newsContent.replace(".,",".\n    ");
+                    }
+                    else
+                    {
+                        newsContent = newsContent.replace(",","\n    ");
+                    }
                     newsTime = (String) JO2.get("time");
                     newsSource = (String) JO2.get("source");
                     newsTitle = (String) JO2.get("title");
