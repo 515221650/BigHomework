@@ -17,6 +17,7 @@ public abstract class NewsFavorDatabase extends RoomDatabase {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     NewsFavorDatabase.class,
                     "newsfavor_database")
+                    .allowMainThreadQueries()
                     .build();
         }
         return INSTANCE;

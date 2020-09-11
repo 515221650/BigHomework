@@ -37,8 +37,14 @@ public class FavorActivity extends AppCompatActivity {
         buttonBack = findViewById(R.id.btn_favor_back);
         init_listener();
 
-        FetchFavor process = new FetchFavor();
-        process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//        FetchFavor process = new FetchFavor();
+//        process.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        List<NewsFavor> lsFavor = newsFavorDao.getAllFavor();
+        newsFavorAdapter.newsFavorArrayList.clear();
+        newsFavorAdapter.newsFavorArrayList.addAll(lsFavor);
+        newsFavorAdapter.notifyDataSetChanged();
+
     }
 
     void init_listener()

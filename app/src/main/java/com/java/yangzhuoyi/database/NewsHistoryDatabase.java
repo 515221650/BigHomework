@@ -17,6 +17,7 @@ public abstract class NewsHistoryDatabase extends RoomDatabase {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     NewsHistoryDatabase.class,
                     "newshistory_database")
+                    .allowMainThreadQueries()
                     .build();
         }
         return INSTANCE;
